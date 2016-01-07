@@ -1,0 +1,18 @@
+flask:
+    PROPAGATE_EXCEPTIONS: True
+    DEBUG: True
+    LOG_LEVEL: debug
+
+uwsgi:
+    master: true
+    pythonpath: /home/CDWEB/dgaraud/src/pyris
+    socket: localhost:8855
+    module: pyris.api.wsgi:app
+    processes: 1
+    enable-threads: true
+    protocol: uwsgi
+    need-app: true
+    catch: exceptions=true
+    touch: reload=/home/CDWEB/dgaraud/pyris-app.reload
+    daemonize: /var/log/uwsgi/app/pyris.log
+    env: PYRIS_APP_SETTINGS=/home/CDWEB/dgaraud/src/pyris/app.yml
