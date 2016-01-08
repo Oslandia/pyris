@@ -33,7 +33,7 @@ def _iris_fields(res):
     """
     return {"iris": res[0],
             'city': res[1],
-            'postcode': res[2],
+            'citycode': res[2],
             'name': res[3],
             'complete_code': res[4],
             'type': res[5]}

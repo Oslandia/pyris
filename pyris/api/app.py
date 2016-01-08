@@ -39,7 +39,7 @@ coordinate_parser.add_argument("lat", required=True, dest='lat', location='args'
 iris_fields = api.model('Iris',
                         OrderedDict([('iris', fields.String),
                                      ('city', fields.String),
-                                     ('postcode', fields.String),
+                                     ('citycode', fields.String),
                                      ('name', fields.String),
                                      ('complete_code', fields.String),
                                      ('type', fields.String)]))
