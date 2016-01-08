@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+ <h2>INSEE IRIS Geolocalization</h2>
+
+<h3>Summary</h3>
+
+<p>
+Find an IRIS code from longitude/latitude coordinates.</br>
+
+Source code at the <a href="http://git.cdbdx.biz/damien.garaud/pyris">Git cdbdx website</a>.
+</p>
+
+<h3>Data</h3>
+
+<p>
+Find the raw data at the <a href="https://www.data.gouv.fr/fr/datasets/contour-des-iris-insee-tout-en-un/">Open Data French gouvernment website</a>.
+</p>
+
+<h3>Access</h3>
+
+<p>
+Examples:
+
+<ul>
+<li>Get some information from an IRIS code: <tt>URL/pyris/iris/0508</tt></li>
+<li>Retrieve the IRIS code from a coordinate: <tt>URL/pyris/search/?lon=-0.5695&lat=44.3586</tt></li>
+</ul>
+
+You also can read and test <a href="http://a01analys001.cdweb.biz/pyris/doc/">the REST API</a>.
+</p>
+
+
+{% endblock %}

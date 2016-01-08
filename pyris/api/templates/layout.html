@@ -1,0 +1,20 @@
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    {% include 'trends-css.html' %}
+
+    <title>pyris INSEE IRIS</title>
+  </head>
+
+  <body>
+    <div class="container">
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+
+  {% include 'trends-js.html' %}
+
+</html>
