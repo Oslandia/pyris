@@ -13,6 +13,21 @@ from pyris.api.sqlrequests import (query_iris,
 Logger = logging.getLogger(__name__)
 
 
+
+def _query(q, params=None):
+    """Carry out a SQL query
+
+    Only fetch one result
+    """
+    with psycopg2.connect(database="pyris", user=user, password=password, host='localhost') as cnx:
+        with cnx.cursor() as cu:
+            if params is not None:
+                cu.execute(q, params)
+            else:
+                cu.execute(q)
+            return cu.fetchone()
+
+
 def _iris_fields(res):
     """Iris field from a SQL query result
     """
@@ -27,23 +42,16 @@ def _iris_fields(res):
 def get_iris_field(code):
     """Get some date from the IRIS code
     """
-
-    with psycopg2.connect(database="pyris", user=user, password=password, host='localhost') as cnx:
-        with cnx.cursor() as cu:
-            cu.execute(query_iris, (code,))
-            res = cu.fetchone()
-            if res is not None:
-                return _iris_fields(res)
-            return res
+    res = _query(query_iris, (code,))
+    if res is not None:
+        return _iris_fields(res)
+    return res
 
 
 def iris_from_coordinate(lon, lat):
     """Get the IRIS code from a coordinate.
     """
-    with psycopg2.connect(database="pyris", user=user, password=password, host='localhost') as cnx:
-        with cnx.cursor() as cu:
-            cu.execute(query_coordinate, (lon, lat))
-            res = cu.fetchone()
-            if res is not None:
-                return _iris_fields(res)
-            return res
+    res = _query(query_coordinate, (lon, lat))
+    if res is not None:
+        return _iris_fields(res)
+    return res
