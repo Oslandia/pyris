@@ -12,7 +12,8 @@ query_iris = """SELECT
   ,dcomiris
   ,typ_iris
 FROM geoiris
-WHERE iris = %s;"""
+WHERE iris = %s
+LIMIT 1;"""
 
 
 # coordinate: (lon, lat)
