@@ -14,6 +14,19 @@ Get and insert data with:
 * `data/download_data.sh`
 * `data/insert_data.sh`
 
+Data will be stored in a PostgreSQL database with the PostGIS extension. The
+name of database is `pyris` but you can change it in the `insert_data.sh`.
+
+You need to install PostgreSQL, PostGIS. For Debian:
+
+    sudo apt-get install postgresql postgis
+
+Test the insertion with a simple:
+
+```sql
+SELECT  gid,depcom,nom_com,iris,typ_iris
+FROM geoiris LIMIT 10;
+```
 
 ## REST API
 
