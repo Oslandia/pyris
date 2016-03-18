@@ -2,7 +2,7 @@
 
 IRIS INSEE geolocalization
 
-Pyris try to collect data about IRIS
+Pyris try to collect data about IRIS from the French INSEE institute
 
 
 ## Data
@@ -39,6 +39,8 @@ You can:
 
 ## Requirements
 
-* Postgresql
-* PostGIS
-* Flask
+* postgresql
+* postgis
+* flask
+* flask restplus
+* pyaml
