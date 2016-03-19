@@ -36,6 +36,12 @@ You can:
 
 * `URL/search/lon=-0.58961&lat=43.26079` to get the IRIS code and related content from a coordinate
 
+## Launch the Web App
+
+Specify the path to the YAML configuration file. Don't forget to set the
+user/password for the database access.
+
+`export PYRIS_APP_SETTINGS=/path/to/app.yml`
 
 ## Requirements
 
