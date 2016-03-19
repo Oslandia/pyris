@@ -43,6 +43,8 @@ user/password for the database access.
 
 `export PYRIS_APP_SETTINGS=/path/to/app.yml`
 
+See an [example of a app.yml file](https://github.com/garaud/pyris/blob/master/app.yml)
+
 ## Requirements
 
 * postgresql

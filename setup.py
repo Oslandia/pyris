@@ -12,7 +12,7 @@ setuptools.setup(
     version='0.1',
     license='BSD',
     url='https://github.com/garaud/pyris',
-    packages=setuptools.find_packages(exclude=['data']),
+    packages=setuptools.find_packages(exclude=['data', 'app.yml']),
     include_package_data=True,
     install_requires=["flask", "flask-restplus", "pyaml"],
 
