@@ -1,0 +1,4 @@
+include README.md MANIFEST.in LICENSE
+recursive-include pyris *
+
+global-exclude *.pyc
