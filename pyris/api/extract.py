@@ -23,10 +23,6 @@ def _query(q, params=None):
 
     Only fetch one result
     """
-    # with psycopg2.connect(database="pyris",
-    #                       user=DATABASE['USER'],
-    #                       password=DATABASE['PASSWORD'],
-    #                       host='localhost') as cnx:
     with psycopg2.connect(database="pyris",
                           user=DATABASE['USER']) as cnx:
         with cnx.cursor() as cu:
