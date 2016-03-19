@@ -14,7 +14,7 @@ setuptools.setup(
     url='https://github.com/garaud/pyris',
     packages=setuptools.find_packages(exclude=['data', 'app.yml']),
     include_package_data=True,
-    install_requires=["flask", "flask-restplus", "pyaml"],
+    install_requires=["flask", "flask-restplus", "psycogp2", "pyaml"],
 
     author="Damien Garaud",
     author_email='damien.garaud@gmail.com',
