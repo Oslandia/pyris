@@ -1,11 +1,15 @@
 # coding: utf-8
 
+"""Extract data from the database
+"""
+
+from __future__ import absolute_import, division, print_function, unicode_literals
 
 import logging
 
 import psycopg2
 
-from pyris.config import user, password
+from pyris.config import DATABASE
 from pyris.api.sqlrequests import (query_iris,
                                    query_coordinate)
 
@@ -19,7 +23,12 @@ def _query(q, params=None):
 
     Only fetch one result
     """
-    with psycopg2.connect(database="pyris", user=user, password=password, host='localhost') as cnx:
+    # with psycopg2.connect(database="pyris",
+    #                       user=DATABASE['USER'],
+    #                       password=DATABASE['PASSWORD'],
+    #                       host='localhost') as cnx:
+    with psycopg2.connect(database="pyris",
+                          user=DATABASE['USER']) as cnx:
         with cnx.cursor() as cu:
             if params is not None:
                 cu.execute(q, params)
