@@ -3,9 +3,13 @@ flask:
     DEBUG: True
     LOG_LEVEL: debug
 
+datatase:
+    USER: USERNAME
+    PASSWORD: PASSWORD
+
 uwsgi:
     master: true
-    pythonpath: /home/CDWEB/dgaraud/src/pyris
+    pythonpath: ~/src/pyris
     socket: localhost:8855
     module: pyris.api.wsgi:app
     processes: 1
@@ -13,6 +17,6 @@ uwsgi:
     protocol: uwsgi
     need-app: true
     catch: exceptions=true
-    touch: reload=/home/CDWEB/dgaraud/pyris-app.reload
+    touch: reload=~/pyris-app.reload
     daemonize: /var/log/uwsgi/app/pyris.log
-    env: PYRIS_APP_SETTINGS=/home/CDWEB/dgaraud/src/pyris/app.yml
+    env: PYRIS_APP_SETTINGS=~/src/pyris/app.yml
