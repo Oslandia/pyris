@@ -1,4 +1,0 @@
-flask:
-    PROPAGATE_EXCEPTIONS: True
-    DEBUG: True
-    LOG_LEVEL: debug
