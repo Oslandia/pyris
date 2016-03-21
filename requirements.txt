@@ -2,3 +2,4 @@ flask
 flask-restplus
 psycopg2
 pyaml
+slumber
