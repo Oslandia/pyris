@@ -49,6 +49,8 @@ See an [example of a app.yml file](https://github.com/garaud/pyris/blob/master/a
 
 * postgresql
 * postgis
+
 * flask
 * flask restplus
+* psycopg2
 * pyaml
