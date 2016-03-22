@@ -5,8 +5,8 @@
 
 import slumber
 
-
-api = slumber.API("http://api-adresse.data.gouv.fr")
+URL = "http://api-adresse.data.gouv.fr"
+api = slumber.API(URL)
 
 
 def coordinate(address):
