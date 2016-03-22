@@ -8,6 +8,7 @@ from flask import Blueprint, jsonify, render_template
 from flask_restplus import fields
 from flask.ext.restplus import Resource, Api, apidoc
 
+from pyris import address
 from pyris.api import extract
 
 
@@ -32,8 +33,13 @@ api = Api(service,
 apidoc.apidoc.static_url_path = service.url_prefix + apidoc.apidoc.static_url_path
 
 coordinate_parser = api.parser()
-coordinate_parser.add_argument("lon", required=True, dest='lon', location='args', help='Longitude')
-coordinate_parser.add_argument("lat", required=True, dest='lat', location='args', help='Latitude')
+coordinate_parser.add_argument("lon", required=True, dest='lon',
+                               location='args', help='Longitude')
+coordinate_parser.add_argument("lat", required=True, dest='lat',
+                               location='args', help='Latitude')
+address_parser = api.parser()
+address_parser.add_argument("q", required=True, dest='q', location='args',
+                            help='Query')
 
 
 iris_fields = api.model('Iris',
@@ -69,4 +75,18 @@ class SearchIris(Resource):
         args = coordinate_parser.parse_args()
         lon, lat = args['lon'], args['lat']
         Logger.info("Look for IRIS from coordinate lon/lat ('%s', '%s')", lon, lat)
+        return extract.iris_from_coordinate(lon, lat)
+
+
+@api.route("/address/")
+class IrisFromAddress(Resource):
+    @api.doc(parser=address_parser,
+             description="Look for an IRIS for a specific address.")
+    @api.marshal_with(iris_fields, envelope='iris')
+    def get(self):
+        args = address_parser.parse_args()
+        query = args['q']
+        Logger.info("Look for IRIS for address '%s'", address)
+        lon, lat = address.coordinate(query)
+        Logger.info("Get coordinate (%s, %s)", lon, lat)
         return extract.iris_from_coordinate(lon, lat)
