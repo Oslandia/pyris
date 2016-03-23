@@ -40,15 +40,18 @@ address_parser = api.parser()
 address_parser.add_argument("q", required=True, dest='q', location='args',
                             help='Query')
 
+IRIS_MODEL = OrderedDict([('iris', fields.String),
+                          ('city', fields.String),
+                          ('citycode', fields.String),
+                          ('name', fields.String),
+                          ('complete_code', fields.String),
+                          ('type', fields.String)])
+ADDRESS_MODEL = IRIS_MODEL.copy()
+ADDRESS_MODEL["address"] = fields.String
 
-iris_fields = api.model('Iris',
-                        OrderedDict([('address', fields.String),
-                                     ('iris', fields.String),
-                                     ('city', fields.String),
-                                     ('citycode', fields.String),
-                                     ('name', fields.String),
-                                     ('complete_code', fields.String),
-                                     ('type', fields.String)]))
+iris_fields = api.model('Iris', IRIS_MODEL)
+address_fields = api.model('Address', ADDRESS_MODEL)
+
 
 @service.route('/doc/', endpoint='doc')
 def swagger_ui():
@@ -59,6 +62,7 @@ def swagger_ui():
 class IrisCode(Resource):
     @api.doc(parser=iris_code_parser,
              description="get data for a specific IRIS (four digits)")
+    @api.marshal_with(iris_fields, envelope='iris')
     def get(self, code):
         args = iris_code_parser.parse_args()
         limit = args['limit']
@@ -74,6 +78,7 @@ class IrisCode(Resource):
 class CompleteIrisCode(Resource):
     @api.doc(description=("Get data for a specific complete IRIS code (9 digits)."
                           " INSEE City code + IRIS code"))
+    @api.marshal_with(iris_fields, envelope='iris')
     def get(self, code):
         Logger.info("look for IRIS '%s'", code)
         iris = extract.get_complete_iris(code)
@@ -86,7 +91,7 @@ class CompleteIrisCode(Resource):
 class IrisFromAddress(Resource):
     @api.doc(parser=address_parser,
              description="Look for an IRIS for a specific address.")
-    @api.marshal_with(iris_fields, envelope='iris')
+    @api.marshal_with(address_fields, envelope='address')
     def get(self):
         args = address_parser.parse_args()
         query = args['q']
