@@ -16,6 +16,7 @@ from pyris.config import DATABASE
 _HERE = os.path.abspath(os.path.dirname(__file__))
 _QUERY_DIR = os.path.join(_HERE, "queries")
 Q_IRIS = "iris.sql"
+Q_COMPIRIS = "complete_iris.sql"
 Q_COORD = "coordinate.sql"
 
 Logger = logging.getLogger(__name__)
@@ -75,6 +76,25 @@ def get_iris_field(code, limit=None):
     Logger.info("res: %s", res)
     if res:
         return [_iris_fields(x) for x in res]
+    return res
+
+
+def get_complete_iris(code):
+    """Get some date from the complete IRIS code
+
+    Complete IRIS code is made up of:
+        - INSEE City code (5 digits). Different from postal code
+        - IRIS code (4 diits)
+
+    code: str
+        Complete IRIS code. Nine digits
+    """
+    query = _load_sql_file(Q_COMPIRIS)
+    Logger.info("Query '%s'", query)
+    res = _query(query, (code,))
+    Logger.info("res: %s", res)
+    if res:
+        return _iris_fields(res[0])
     return res
 
 

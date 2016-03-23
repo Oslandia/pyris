@@ -70,6 +70,18 @@ class IrisCode(Resource):
         return iris
 
 
+@api.route("/compiris/<string:code>")
+class CompleteIrisCode(Resource):
+    @api.doc(description=("Get data for a specific complete IRIS code (9 digits)."
+                          " INSEE City code + IRIS code"))
+    def get(self, code):
+        Logger.info("look for IRIS '%s'", code)
+        iris = extract.get_complete_iris(code)
+        if not iris:
+            api.abort(404, "Complete IRIS code '{}' not found".format(code))
+        return iris
+
+
 @api.route("/search/")
 class IrisFromAddress(Resource):
     @api.doc(parser=address_parser,
