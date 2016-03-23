@@ -28,7 +28,7 @@ def index():
 api = Api(service,
           title='IRIS Geolocalization',
           ui=False,
-          version='1.0',
+          version='0.1',
           description="Retrieve IRIS from coordinate (latitude,longitude).")
 apidoc.apidoc.static_url_path = service.url_prefix + apidoc.apidoc.static_url_path
 
