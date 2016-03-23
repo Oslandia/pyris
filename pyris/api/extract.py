@@ -58,3 +58,13 @@ def get_iris_field(code, limit=None):
     if res is not None:
         return [_iris_fields(x) for x in res]
     return res
+
+
+def iris_from_coordinate(lon, lat):
+    """Get the IRIS code from a coordinate.
+    """
+    query_coordinate = _load_sql_file(Q_COORD)
+    res = _query(query_coordinate, (lon, lat))
+    if res is not None:
+        return _iris_fields(res)
+    return res
