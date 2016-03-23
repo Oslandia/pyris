@@ -48,6 +48,8 @@ IRIS_MODEL = OrderedDict([('iris', fields.String),
                           ('type', fields.String)])
 ADDRESS_MODEL = IRIS_MODEL.copy()
 ADDRESS_MODEL["address"] = fields.String
+ADDRESS_MODEL["lon"] = fields.Float
+ADDRESS_MODEL["lat"] = fields.Float
 
 iris_fields = api.model('Iris', IRIS_MODEL)
 address_fields = api.model('Address', ADDRESS_MODEL)
@@ -100,5 +102,5 @@ class IrisFromAddress(Resource):
         Logger.info("Get coordinate (%s, %s)", coord["lon"], coord["lat"])
         Logger.info("For address '%s'", coord["address"])
         res = extract.iris_from_coordinate(coord['lon'], coord['lat'])
-        res["address"] = coord['address']
+        res.update(coord)
         return res
