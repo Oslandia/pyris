@@ -5,17 +5,32 @@
 
 from __future__ import absolute_import, division, print_function, unicode_literals
 
+import os
 import logging
 
 import psycopg2
 
 from pyris.config import DATABASE
-from pyris.api.sqlrequests import (query_iris,
-                                   query_coordinate)
 
+
+_HERE = os.path.abspath(os.path.dirname(__file__))
+_QUERY_DIR = os.path.join(_HERE, "queries")
+Q_IRIS = "iris.sql"
+Q_COORD = "coordinate.sql"
 
 Logger = logging.getLogger(__name__)
 
+
+def _load_sql_file(fname):
+    """Return the content of the SQL file `fname`
+
+    fname: str
+
+    Return a string
+    """
+    skip = lambda x: x.strip().startswith('--') or len(x.strip()) == 0
+    with open(os.path.join(_QUERY_DIR, fname)) as fobj:
+        return "\n".join(line for line in fobj if not skip(line))
 
 
 def _query(q, params=None):
@@ -52,8 +67,9 @@ def get_iris_field(code, limit=None):
     limit: int (None)
         number of results
     """
-    q = (query_iris if limit is None else
-         query_iris.replace(";", " LIMIT {};".format(limit)))
+    query_iris = _load_sql_file(Q_IRIS)
+    if limit is not None:
+        query_iris = query_iris.replace(";", " LIMIT {};".format(limit))
     res = _query(query_iris, (code,))
     if res is not None:
         return [_iris_fields(x) for x in res]
