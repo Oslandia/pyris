@@ -32,11 +32,6 @@ api = Api(service,
           description="Retrieve IRIS from coordinate (latitude,longitude).")
 apidoc.apidoc.static_url_path = service.url_prefix + apidoc.apidoc.static_url_path
 
-coordinate_parser = api.parser()
-coordinate_parser.add_argument("lon", required=True, dest='lon',
-                               location='args', help='Longitude')
-coordinate_parser.add_argument("lat", required=True, dest='lat',
-                               location='args', help='Latitude')
 iris_code_parser = api.parser()
 iris_code_parser.add_argument("limit", required=False, dest='limit',
                                location='args', help='Limit')
@@ -72,18 +67,6 @@ class IrisCode(Resource):
 
 
 @api.route("/search/")
-class SearchIris(Resource):
-    @api.doc(parser=coordinate_parser,
-             description="Look for an IRIS for a coordinate (lon/lat).")
-    @api.marshal_with(iris_fields, envelope='iris')
-    def get(self):
-        args = coordinate_parser.parse_args()
-        lon, lat = args['lon'], args['lat']
-        Logger.info("Look for IRIS from coordinate lon/lat ('%s', '%s')", lon, lat)
-        return extract.iris_from_coordinate(lon, lat)
-
-
-@api.route("/address/")
 class IrisFromAddress(Resource):
     @api.doc(parser=address_parser,
              description="Look for an IRIS for a specific address.")
