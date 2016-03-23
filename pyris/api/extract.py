@@ -44,9 +44,16 @@ def _iris_fields(res):
             'type': res[5]}
 
 
-def get_iris_field(code):
+def get_iris_field(code, limit=None):
     """Get some date from the IRIS code
+
+    code: str
+        IRIS code. Four digits
+    limit: int (None)
+        number of results
     """
+    q = (query_iris if limit is None else
+         query_iris.replace(";", " LIMIT {};".format(limit)))
     res = _query(query_iris, (code,))
     if res is not None:
         return _iris_fields(res)

@@ -57,10 +57,15 @@ def swagger_ui():
 
 @api.route("/iris/<string:code>")
 class IrisCode(Resource):
-    @api.doc(description="get data for a specific IRIS")
+    @api.doc(parser=iris_code_parser,
+             description="get data for a specific IRIS")
     def get(self, code):
+        args = iris_code_parser.parse_args()
+        limit = args['limit']
+        Logger.info("look for IRIS '%s", code)
+        Logger.info("with limit %s", limit)
         # check the search_id
-        iris = extract.get_iris_field(code)
+        iris = extract.get_iris_field(code, limit)
         if not iris:
             api.abort(404, "IRIS code '{}' not found".format(code))
         return iris

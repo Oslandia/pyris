@@ -4,16 +4,15 @@
 """
 
 
-query_iris = """SELECT
-   iris
+query_iris = """SELECT DISTINCT
+   depcom
+  ,iris
   ,nom_com
-  ,depcom
   ,nom_iris
   ,dcomiris
   ,typ_iris
 FROM geoiris
-WHERE iris = %s
-LIMIT 1;"""
+WHERE iris = %s;"""
 
 
 # coordinate: (lon, lat)
