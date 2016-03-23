@@ -37,13 +37,18 @@ coordinate_parser.add_argument("lon", required=True, dest='lon',
                                location='args', help='Longitude')
 coordinate_parser.add_argument("lat", required=True, dest='lat',
                                location='args', help='Latitude')
+iris_code_parser = api.parser()
+iris_code_parser.add_argument("limit", required=False, dest='limit',
+                               location='args', help='Limit')
+
 address_parser = api.parser()
 address_parser.add_argument("q", required=True, dest='q', location='args',
                             help='Query')
 
 
 iris_fields = api.model('Iris',
-                        OrderedDict([('iris', fields.String),
+                        OrderedDict([('address', fields.String),
+                                     ('iris', fields.String),
                                      ('city', fields.String),
                                      ('citycode', fields.String),
                                      ('name', fields.String),
@@ -87,6 +92,9 @@ class IrisFromAddress(Resource):
         args = address_parser.parse_args()
         query = args['q']
         Logger.info("Look for IRIS for address '%s'", address)
-        lon, lat = address.coordinate(query)
-        Logger.info("Get coordinate (%s, %s)", lon, lat)
-        return extract.iris_from_coordinate(lon, lat)
+        coord = address.coordinate(query)
+        Logger.info("Get coordinate (%s, %s)", coord["lon"], coord["lat"])
+        Logger.info("For address '%s'", coord["address"])
+        res = extract.iris_from_coordinate(coord['lon'], coord['lat'])
+        res["address"] = coord['address']
+        return res
