@@ -6,12 +6,12 @@ import setuptools
 with open("README.md") as fobj:
     LONG_DESCRIPTION = fobj.read()
 
-INSTALL_REQUIRES = ["flask", "flask-restplus", "psycogp2", "pyaml",
+INSTALL_REQUIRES = ["flask", "flask-restplus", "psycopg2", "pyaml",
                     "slumber"]
 
 setuptools.setup(
     name='pyris',
-    version='0.1',
+    version='0.2',
     license='BSD',
     url='https://github.com/garaud/pyris',
     packages=setuptools.find_packages(exclude=['data', 'app.yml']),
