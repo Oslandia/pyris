@@ -30,7 +30,7 @@ def _query(q, params=None):
                 cu.execute(q, params)
             else:
                 cu.execute(q)
-            return cu.fetchone()
+            return cu.fetchall()
 
 
 def _iris_fields(res):
@@ -56,14 +56,5 @@ def get_iris_field(code, limit=None):
          query_iris.replace(";", " LIMIT {};".format(limit)))
     res = _query(query_iris, (code,))
     if res is not None:
-        return _iris_fields(res)
-    return res
-
-
-def iris_from_coordinate(lon, lat):
-    """Get the IRIS code from a coordinate.
-    """
-    res = _query(query_coordinate, (lon, lat))
-    if res is not None:
-        return _iris_fields(res)
+        return [_iris_fields(x) for x in res]
     return res

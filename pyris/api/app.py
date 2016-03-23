@@ -33,8 +33,8 @@ api = Api(service,
 apidoc.apidoc.static_url_path = service.url_prefix + apidoc.apidoc.static_url_path
 
 iris_code_parser = api.parser()
-iris_code_parser.add_argument("limit", required=False, dest='limit',
-                               location='args', help='Limit')
+iris_code_parser.add_argument("limit", required=False, default=10, dest='limit',
+                              location='args', help='Limit')
 
 address_parser = api.parser()
 address_parser.add_argument("q", required=True, dest='q', location='args',
@@ -58,7 +58,7 @@ def swagger_ui():
 @api.route("/iris/<string:code>")
 class IrisCode(Resource):
     @api.doc(parser=iris_code_parser,
-             description="get data for a specific IRIS")
+             description="get data for a specific IRIS (four digits)")
     def get(self, code):
         args = iris_code_parser.parse_args()
         limit = args['limit']
@@ -68,7 +68,7 @@ class IrisCode(Resource):
         iris = extract.get_iris_field(code, limit)
         if not iris:
             api.abort(404, "IRIS code '{}' not found".format(code))
-        return iris
+        return [iris]
 
 
 @api.route("/search/")
