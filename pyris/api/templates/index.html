@@ -2,14 +2,30 @@
 
 {% block content %}
 
- <h2>INSEE IRIS Geolocalization</h2>
+ <h2>Pyris: INSEE IRIS Geolocalizer</h2>
 
 <h3>Summary</h3>
 
 <p>
-Find an IRIS code from longitude/latitude coordinates.</br>
+  <u>Find an IRIS code from a French address</u>.</br></br>
 
-Source code on <a href="https://github.com/garaud/pyris">Github</a>.
+  Source code on <a href="https://github.com/garaud/pyris">Github</a>.
+</p>
+
+<p>
+  <a href="http://www.insee.fr/fr/methodes/default.asp?page=definitions/iris.htm">IRIS</a>
+  is a a code related to a district provided
+  by <a href="https://fr.wikipedia.org/wiki/Institut_national_de_la_statistique_et_des_%C3%A9tudes_%C3%A9conomiques">INSEE</a>,
+  the French National Institute of Statistics and Economic Studies. Thus, it's
+  possible to have some statistical indicators for more than 50,000 different
+  IRIS (resp. districts).</br>
+
+  <strong>Note:</strong> Pyris does not take into account statistical data (for
+  now). </br></br>
+
+  The longitude/latitude coordinates are retrieved thanks to
+  the <a href="https://adresse.data.gouv.fr/about/">National Address French
+  Base</a> and its great <a href="https://adresse.data.gouv.fr/api/">API</a>.
 </p>
 
 <h3>Data</h3>
@@ -21,14 +37,17 @@ Find the raw data at the <a href="https://www.data.gouv.fr/fr/datasets/contour-d
 <h3>Access</h3>
 
 <p>
-Examples:
+  Examples:
 
-<ul>
-<li>Get some information from an IRIS code: <tt>URL/pyris/iris/0508</tt></li>
-<li>Retrieve the IRIS code from a coordinate: <tt>URL/pyris/search/?lon=-0.5695&lat=44.3586</tt></li>
-</ul>
+  <ul>
+    <li>Get some information from an IRIS code: <tt>URL/pyris/iris/0508</tt></li>
+    <li>Retrieve the IRIS code from an address: <tt>URL/pyris/search/?q=place de
+    la bourse Bordeaux</tt></li>
+  </ul>
 
-You also can read and try <a href="/pyris/doc/">the REST API</a>.
+  You also can read and try <a href="/pyris/doc/">the REST API</a> generated
+  by <a href="https://flask-restplus.readthedocs.org/en/stable/">flask-resplus</a>
+  and <a href="http://swagger.io/">Swagger</a>.
 </p>
 
 

@@ -26,10 +26,10 @@ def index():
 
 
 api = Api(service,
-          title='IRIS Geolocalization',
+          title='INSEE/IRIS Geolocalizer',
           ui=False,
           version='0.1',
-          description="Retrieve IRIS from coordinate (latitude,longitude).")
+          description="Retrieve some data related to the IRIS codes. Look for an IRIS from an address.")
 apidoc.apidoc.static_url_path = service.url_prefix + apidoc.apidoc.static_url_path
 
 iris_code_parser = api.parser()
