@@ -1,0 +1,24 @@
+{
+  "name": "pyris",
+  "version": "0.2.0",
+  "authors": [
+    "Damien Garaud <damien.garaud@gmail.com>"
+  ],
+  "description": "INSEE/IRIS Geolocalizer",
+  "keywords": [
+    "INSEE",
+    "IRIS"
+  ],
+  "license": "BSD",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "./pyris/api/static/bower/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}
