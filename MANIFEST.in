@@ -1,4 +1,11 @@
-include README.md MANIFEST.in LICENSE
+include README.md MANIFEST.in LICENSE data/download_data.sh data/insert_data.sh
+
 recursive-include pyris *
+
+prune pyris/api/static/bower
+
+include pyris/api/static/bower/jquery/dist/jquery.min.js
+include pyris/api/static/bower/bootstrap/dist/js/bootstrap.min.js
+include pyris/api/static/bower/bootstrap/dist/css/bootstrap.min.css
 
 global-exclude *.pyc
