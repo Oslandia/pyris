@@ -1,8 +1,8 @@
 # Pyris
 
-IRIS INSEE geolocalization
+IRIS INSEE Geolocalizer
 
-Pyris try to collect data about IRIS from the French INSEE institute
+Pyris try to collect data about IRIS from the French INSEE institute.
 
 
 ## Data
@@ -32,9 +32,10 @@ FROM geoiris LIMIT 10;
 
 You can:
 
-* `URL/iris/2386` to the some information about a specific IRIS code
+* `URL/iris/0104?limit=5` to the some information about a specific IRIS code
 
-* `URL/search/lon=-0.58961&lat=43.26079` to get the IRIS code and related content from a coordinate
+* `URL/search/q=place de la bourse Bordeaux` to get the IRIS data from a
+  specific address
 
 ## Launch the Web App
 
@@ -45,6 +46,8 @@ user/password for the database access.
 
 See an [example of a app.yml file](https://github.com/garaud/pyris/blob/master/app.yml)
 
+Then `python run.py` in the `pryis/api/` directory.
+
 ## Requirements
 
 * postgresql
@@ -53,4 +56,5 @@ See an [example of a app.yml file](https://github.com/garaud/pyris/blob/master/a
 * flask
 * flask restplus
 * psycopg2
+* slumber
 * pyaml
