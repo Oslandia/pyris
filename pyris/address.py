@@ -18,7 +18,9 @@ def coordinate(address):
     """
     resources = api.search.get(q=address)
     if len(resources['features']) == 0:
-        return None,None
+        return {"lon": None,
+                "lat": None,
+                'address': None}
     lon, lat = lonlat(resources["features"][0])
     return {"lon": lon,
             "lat": lat,

@@ -101,6 +101,8 @@ class IrisFromAddress(Resource):
         coord = address.coordinate(query)
         Logger.info("Get coordinate (%s, %s)", coord["lon"], coord["lat"])
         Logger.info("For address '%s'", coord["address"])
+        if coord['address'] is None:
+            return []
         res = extract.iris_from_coordinate(coord['lon'], coord['lat'])
         res.update(coord)
         return res
