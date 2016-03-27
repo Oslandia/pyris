@@ -2,8 +2,14 @@
 
 IRIS INSEE Geolocalizer
 
-Pyris try to collect data about IRIS from the French INSEE institute.
+Pyris try to collect data about
+[IRIS](http://www.insee.fr/fr/methodes/default.asp?page=zonages/iris.htm) from
+the French [INSEE](http://www.insee.fr/en/) institute. It's possible from an
+address to find the IRIS code and some related data.
 
+[IRIS](http://www.insee.fr/fr/methodes/default.asp?page=zonages/iris.htm) are
+specific codes and data related to more than 50,000 districts, built by the
+[National Institute of Statistics and Economic Studies](http://www.insee.fr/en/).
 
 ## Data
 
@@ -39,7 +45,10 @@ You can:
 
 ## Launch the Web App
 
-Specify the path to the YAML configuration file. Don't forget to set the
+First, download the few CSS & JavaScript dependencies with a `bower install`
+(just a Bootstrap and jQuery).
+
+The, specify the path to the YAML configuration file. Don't forget to set the
 user/password for the database access.
 
 `export PYRIS_APP_SETTINGS=/path/to/app.yml`
