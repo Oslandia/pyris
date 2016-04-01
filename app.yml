@@ -3,9 +3,9 @@ flask:
     DEBUG: True
     LOG_LEVEL: debug
 
-datatase:
+database:
     USER: USERNAME
-    PASSWORD: PASSWORD
+    # PASSWORD: PASSWORD
 
 uwsgi:
     master: true
