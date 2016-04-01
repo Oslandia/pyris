@@ -55,7 +55,7 @@ iris_fields = api.model('Iris', IRIS_MODEL)
 address_fields = api.model('Address', ADDRESS_MODEL)
 
 
-@service.route('/doc/', endpoint='doc')
+@service.route('/doc/')
 def swagger_ui():
     return apidoc.ui_for(api)
 
