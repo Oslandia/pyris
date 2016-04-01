@@ -15,22 +15,30 @@ specific codes and data related to more than 50,000 districts, built by the
 
 IRIS shapes at https://www.data.gouv.fr/fr/datasets/contour-des-iris-insee-tout-en-un/
 
-Get and insert data with:
+Go to the `data` directory and then:
 
-* `data/download_data.sh`
-* `data/insert_data.sh`
+* `./download_data.sh`
 
-Data will be stored in a PostgreSQL database with the PostGIS extension. The
-name of database is `pyris` but you can change it in the `insert_data.sh`.
-
-You need to install PostgreSQL, PostGIS. For Debian:
+You have to install postgreSQL and PostGIS. For Debian:
 
     sudo apt-get install postgresql postgis
+
+Create a database name `pyris`. And then:
+
+* `psql pyris -c "CREATE EXTENSION postgis;"`
+* `./insert_data.sh`
+
+You have to be a PostgreSQL superuser to create the postgis extension for your
+database. If it's not the case, you can do:
+
+* `su`
+* `su - postgres`
+* `psql pyris -c "CREATE EXTENSION postgis;"`
 
 Test the insertion with a simple:
 
 ```sql
-SELECT  gid,depcom,nom_com,iris,typ_iris
+SELECT gid,depcom,nom_com,iris,typ_iris
 FROM geoiris LIMIT 10;
 ```
 
