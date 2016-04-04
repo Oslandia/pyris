@@ -73,7 +73,6 @@ def create_app(env='Defaults'):
     """
     app = Flask(__name__)
     cfgfile = os.environ.get('PYRIS_APP_SETTINGS')
-    print(cfgfile)
     Logger.info(cfgfile)
     if cfgfile:
         app.config.update(load_yaml_config(cfgfile))
