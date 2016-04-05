@@ -56,14 +56,10 @@ You can:
 First, download the few CSS & JavaScript dependencies with a `bower install`
 (just a Bootstrap and jQuery).
 
-The, specify the path to the YAML configuration file. Don't forget to set the
-user/password for the database access.
-
-`export PYRIS_APP_SETTINGS=/path/to/app.yml`
+Then
+`gunicorn -b 127.0.0.1:5555 --env PYRIS_APP_SETTINGS=./appdev.yml pyris.api.run:app`
 
 See an [example of a app.yml file](https://github.com/garaud/pyris/blob/master/app.yml)
-
-Then `python run.py` in the `pryis/api/` directory.
 
 ## Requirements
 
