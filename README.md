@@ -56,10 +56,15 @@ You can:
 First, download the few CSS & JavaScript dependencies with a `bower install`
 (just a Bootstrap and jQuery).
 
-Then
-`gunicorn -b 127.0.0.1:5555 --env PYRIS_APP_SETTINGS=./appdev.yml pyris.api.run:app`
+Then :
+`> gunicorn -b 127.0.0.1:5555 pyris.api.run:app`
+or
+`> gunicorn -b 127.0.0.1:5555 --env PYRIS_APP_SETTINGS=./appdev.yml pyris.api.run:app`
+if you have to specify db credentials or logging Flask app configuration.
 
 See an [example of a app.yml file](https://github.com/garaud/pyris/blob/master/app.yml)
+
+Visit http://localhost:5555/pyris
 
 ## Requirements
 
