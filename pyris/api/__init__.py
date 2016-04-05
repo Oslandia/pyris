@@ -77,7 +77,10 @@ def create_app(env='Defaults'):
     if cfgfile:
         app.config.update(load_yaml_config(cfgfile))
 
-    set_level(app.config['LOG_LEVEL'])
+    if not 'LOG_LEVEL' in app.config:
+        set_level('debug')
+    else:
+        set_level(app.config['LOG_LEVEL'])
     Logger.info("Run the app")
     register_extensions(app)
     app.json_encoder = CustomJSONEncoder
