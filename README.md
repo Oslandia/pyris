@@ -17,16 +17,16 @@ IRIS shapes at https://www.data.gouv.fr/fr/datasets/contour-des-iris-insee-tout-
 
 Go to the `data` directory and then:
 
-* `./download_data.sh`
+* `./01-download-data.sh`
 
 You have to install postgreSQL and PostGIS. For Debian:
 
     sudo apt-get install postgresql postgis
 
-Create a database name `pyris`. And then:
+Create a database name `pyris` with:
 
-* `psql pyris -c "CREATE EXTENSION postgis;"`
-* `./insert_data.sh`
+* `02-create-database.sh`
+* and `03-insert-data.sh` to insert data
 
 You have to be a PostgreSQL superuser to create the postgis extension for your
 database. If it's not the case, you can do:
