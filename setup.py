@@ -7,7 +7,7 @@ with open("README.md") as fobj:
     LONG_DESCRIPTION = fobj.read()
 
 INSTALL_REQUIRES = ["flask", "flask-restplus", "psycopg2", "pyaml",
-                    "slumber"]
+                    "slumber", "gunicorn"]
 
 setuptools.setup(
     name='pyris',
