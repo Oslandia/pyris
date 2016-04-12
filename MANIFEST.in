@@ -1,4 +1,4 @@
-include README.md MANIFEST.in LICENSE setup.cfg data/download_data.sh data/insert_data.sh
+include README.md MANIFEST.in LICENSE setup.cfg data/*.sh
 
 recursive-include pyris *
 
