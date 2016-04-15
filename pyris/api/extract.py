@@ -39,6 +39,7 @@ def _query(q, params=None):
 
     Only fetch one result
     """
+    Logger.debug("processing query '%s'", q)
     with psycopg2.connect(database="pyris",
                           user=DATABASE['USER']) as cnx:
         with cnx.cursor() as cu:
@@ -71,9 +72,8 @@ def get_iris_field(code, limit=None):
     query_iris = _load_sql_file(Q_IRIS)
     if limit is not None:
         query_iris = query_iris.replace(";", " LIMIT {};".format(limit))
-    Logger.info("Query '%s'", query_iris)
     res = _query(query_iris, (code,))
-    Logger.info("res: %s", res)
+    Logger.debug("res: %s", res)
     if res:
         return [_iris_fields(x) for x in res]
     return res
@@ -90,9 +90,9 @@ def get_complete_iris(code):
         Complete IRIS code. Nine digits
     """
     query = _load_sql_file(Q_COMPIRIS)
-    Logger.info("Query '%s'", query)
+    Logger.debug("Query '%s'", query)
     res = _query(query, (code,))
-    Logger.info("res: %s", res)
+    Logger.debug("res: %s", res)
     if res:
         return _iris_fields(res[0])
     return res
@@ -102,9 +102,9 @@ def iris_from_coordinate(lon, lat):
     """Get the IRIS code from a coordinate.
     """
     query_coordinate = _load_sql_file(Q_COORD)
-    Logger.info("Query '%s'", query_coordinate)
+    Logger.debug("Query '%s'", query_coordinate)
     res = _query(query_coordinate, (lon, lat))
-    Logger.info("res: %s", res)
+    Logger.debug("res: %s", res)
     if res:
         return _iris_fields(res[0])
     return res
