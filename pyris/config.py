@@ -15,8 +15,9 @@ from yaml import load as yload
 
 
 _cfgfile = os.environ.get('PYRIS_APP_SETTINGS')
-DATABASE = {"USER": os.environ["USERNAME"]}
 
 if _cfgfile is not None:
     with io.open(_cfgfile, 'r') as fobj:
         DATABASE = yload(fobj.read()).get('database', {})
+else:
+    DATABASE = {"USER": os.environ["USER"]}
