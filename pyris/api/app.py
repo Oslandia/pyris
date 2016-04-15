@@ -16,9 +16,8 @@ Logger = logging.getLogger(__name__)
 
 service = Blueprint(
     'api',
-    __name__,
-    url_prefix='/pyris'
-)
+    __name__)
+
 
 @service.route('/')
 def index():
@@ -30,7 +29,6 @@ api = Api(service,
           ui=False,
           version='0.1',
           description="Retrieve some data related to the IRIS codes. Look for an IRIS from an address.")
-apidoc.apidoc.static_url_path = service.url_prefix + apidoc.apidoc.static_url_path
 
 iris_code_parser = api.parser()
 iris_code_parser.add_argument("limit", required=False, default=10, dest='limit',
