@@ -27,14 +27,9 @@ LOG_LEVELS = {
 }
 
 console = logging.StreamHandler()
-log_formatter = logging.Formatter("[%(asctime)s][%(levelname)s][%(module)s] %(message)s")
+log_formatter = logging.Formatter("%(asctime)s :: %(levelname)s :: %(module)s :: %(funcName)s :: %(message)s")
 console.setFormatter(log_formatter)
 Logger.addHandler(console)
-# Log file
-log_file = os.path.join(os.environ['HOME'], 'pyris-flaskapp.log')
-fileHandler = logging.FileHandler(log_file)
-fileHandler.setFormatter(log_formatter)
-Logger.addHandler(fileHandler)
 
 
 class CustomJSONEncoder(JSONEncoder):
