@@ -11,6 +11,9 @@ address to find the IRIS code and some related data.
 specific codes and data related to more than 50,000 districts, built by the
 [National Institute of Statistics and Economic Studies](http://www.insee.fr/en/).
 
+* Running instance http://pyris.datajazz.io/
+* API documentation at http://pyris.datajazz.io/doc/
+
 ## Data
 
 IRIS shapes at https://www.data.gouv.fr/fr/datasets/contour-des-iris-insee-tout-en-un/
