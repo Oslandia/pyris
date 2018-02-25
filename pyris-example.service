@@ -1,0 +1,14 @@
+# example of a systemd file
+[Unit]
+Description=Pyris API
+
+[Service]
+ExecStart=/home/user/.local/share/virtualenvs/pyris/bin/gunicorn --env PYRIS_APP_SETTINGS=/home/user/pyris/prod.yaml -b unix:/var/run/pyris-gunicorn.sock -w 2 pyris.api.run:app
+WorkingDirectory=/home/user/src/pyris
+Restart=always
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGQUIT
+NotifyAccess=all
+
+[Install]
+WantedBy=multi-user.target
