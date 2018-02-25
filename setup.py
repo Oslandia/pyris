@@ -6,7 +6,7 @@ import setuptools
 with open("README.md") as fobj:
     LONG_DESCRIPTION = fobj.read()
 
-INSTALL_REQUIRES = ["flask", "flask-restplus", "psycopg2", "pyaml",
+INSTALL_REQUIRES = ["flask", "flask-restplus", "psycopg2-binary", "pyaml",
                     "slumber", "gunicorn"]
 
 setuptools.setup(
@@ -30,5 +30,6 @@ setuptools.setup(
         "Programming Language :: Python",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
     ]
 )
