@@ -11,7 +11,7 @@ INSTALL_REQUIRES = ["flask", "flask-restplus", "psycopg2-binary", "pyaml",
 
 setuptools.setup(
     name='pyris',
-    version='0.4',
+    version='0.5',
     license='BSD',
     url='https://github.com/garaud/pyris',
     packages=setuptools.find_packages(exclude=['data', 'app.yml']),
