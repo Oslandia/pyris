@@ -7,5 +7,6 @@ SELECT DISTINCT
   ,nom_iris
   ,dcomiris
   ,typ_iris
+  ,st_asGeoJSON(geom) as geom
 FROM geoiris
 WHERE iris = %s;
