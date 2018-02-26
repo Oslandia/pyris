@@ -20,6 +20,10 @@ service = Blueprint(
 def index():
     return render_template("index.html")
 
+@service.route('/map')
+def map():
+    return render_template("map.html")
+
 
 api = Api(service,
           title='INSEE/IRIS Geolocalizer',
