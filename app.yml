@@ -5,6 +5,7 @@ flask:
 
 database:
     USER: USERNAME
+    HOST: localhost
     # PASSWORD: PASSWORD
 
 uwsgi:
