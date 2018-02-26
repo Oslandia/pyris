@@ -63,3 +63,5 @@ docs/_build/
 # PyBuilder
 target/
 
+# js
+pyris/api/static/bower/
