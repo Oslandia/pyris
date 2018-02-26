@@ -20,4 +20,5 @@ if _cfgfile is not None:
     with io.open(_cfgfile, 'r') as fobj:
         DATABASE = yload(fobj.read()).get('database', {})
 else:
-    DATABASE = {"USER": os.environ["USER"]}
+    DATABASE = {"USER": os.environ["USER"],
+                "HOST": "localhost"}

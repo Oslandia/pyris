@@ -41,7 +41,9 @@ def _query(q, params=None):
     """
     Logger.debug("processing query '%s'", q)
     with psycopg2.connect(database="pyris",
-                          user=DATABASE['USER']) as cnx:
+                          user=DATABASE['USER'],
+                          password=DATABASE.get('PASSWORD'),
+                          host=DATABASE['HOST']) as cnx:
         with cnx.cursor() as cu:
             if params is not None:
                 cu.execute(q, params)
