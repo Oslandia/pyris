@@ -43,11 +43,26 @@ function addressEvent(map) {
 
 // single Leaflet marker
 var marker;
+// GeoJSON polygon
+var layer;
 
 function updateMap(map, feature) {
   // console.log(feature);
   // console.log(feature.geometry.coordinates);
   var coords = feature.geometry.coordinates.reverse();
+  $.ajax({
+    url: '/coords',
+    dataType: 'json',
+    data: {
+      lat: coords[0],
+      lon: coords[1],
+      geojson: true
+    },
+    success: function(data) {
+      // console.log(data);
+      addGeoJSONLayer(map, data);
+    }
+  });
   if (marker) {
     map.removeLayer(marker);
   }
@@ -56,6 +71,24 @@ function updateMap(map, feature) {
   map.flyTo(coords, 14);
 }
 
+function addGeoJSONLayer(map, feature) {
+  if (layer) {
+    map.removeLayer(layer);
+  }
+  layer = L.geoJSON(feature);
+  layer.bindPopup("<ul><li><b>City</b>: " + feature.properties.city
+                  + "</li><li><b>Citycode</b>: " + feature.properties.citycode + "</li>"
+                  + "<li><b>Name</b>: " + feature.properties.name + "</li>"
+                  + "<li><b>Type</b>: " + feature.properties.type + "</li>"
+                  + "<li><b>Iris</b>: " + feature.properties.iris + "</li>" + "</ul>")
+    .on('mouseover', function(e) {
+      this.openPopup();
+    })
+    .on('mouseout', function(e) {
+      this.closePopup();
+    });
+  layer.addTo(map);
+}
 
 // Leaflet Map
 $(document).ready(function() {
