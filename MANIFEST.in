@@ -4,7 +4,7 @@ recursive-include pyris *
 
 prune pyris/api/static/bower
 
-include pyris/api/static/bower/jquery/dist/jquery.min.js
+include pyris/api/static/bower/jquery/dist/jquery.js
 include pyris/api/static/bower/bootstrap/dist/js/bootstrap.min.js
 include pyris/api/static/bower/bootstrap/dist/css/bootstrap.min.css
 include pyris/api/static/bower/leaflet/dist/leaflet.css
