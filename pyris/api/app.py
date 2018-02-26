@@ -70,6 +70,21 @@ class IrisCode(Resource):
         return iris
 
 
+@api.route("/coords")
+class IrisFromCoordinates(Resource):
+    @api.doc(parser=coords_parser,
+             description="get IRIS from a lat/lon coordinates")
+    def get(self):
+        args = coords_parser.parse_args()
+        lat, lon = args['lat'], args['lon']
+        Logger.info("Coordinates '%s'", (lon, lat))
+        Logger.info("geojson? %s", args['geojson'])
+        res = extract.iris_from_coordinate(lon, lat, args['geojson'])
+        if not res:
+            api.abort(404, "IRIS not found from coordinates ({}, {})".format(lat, lon))
+        return res
+
+
 @api.route("/compiris/<string:code>")
 class CompleteIrisCode(Resource):
     @api.doc(parser=geojson_parser,
