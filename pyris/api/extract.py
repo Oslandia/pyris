@@ -6,6 +6,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import os
+import json
 import logging
 
 import psycopg2
@@ -41,7 +42,9 @@ def _query(q, params=None):
     """
     Logger.debug("processing query '%s'", q)
     with psycopg2.connect(database="pyris",
-                          user=DATABASE['USER']) as cnx:
+                          user=DATABASE['USER'],
+                          password=DATABASE.get('PASSWORD'),
+                          host=DATABASE['HOST']) as cnx:
         with cnx.cursor() as cu:
             if params is not None:
                 cu.execute(q, params)
@@ -50,19 +53,24 @@ def _query(q, params=None):
             return cu.fetchall()
 
 
-def _iris_fields(res):
+def _iris_fields(res, geojson=False):
     """Iris field from a SQL query result
     """
-    return {"iris": res[0],
+    data = {"iris": res[0],
             'city': res[1],
             'citycode': res[2],
             'name': res[3],
             'complete_code': res[4],
             'type': res[5]}
+    if geojson:
+        return {"type": "Feature",
+                "geometry": json.loads(res[6]),
+                "properties": data}
+    return data
 
 
-def get_iris_field(code, limit=None):
-    """Get some date from the IRIS code
+def get_iris_field(code, limit=None, geojson=False):
+    """Get some data from the IRIS code
 
     code: str
         IRIS code. Four digits
@@ -75,11 +83,15 @@ def get_iris_field(code, limit=None):
     res = _query(query_iris, (code,))
     Logger.debug("res: %s", res)
     if res:
-        return [_iris_fields(x) for x in res]
+        data = [_iris_fields(x, geojson) for x in res]
+        if geojson:
+            return {"type": "FeatureCollection",
+                    "features": data}
+        return data
     return res
 
 
-def get_complete_iris(code):
+def get_complete_iris(code, geojson=False):
     """Get some date from the complete IRIS code
 
     Complete IRIS code is made up of:
@@ -94,11 +106,11 @@ def get_complete_iris(code):
     res = _query(query, (code,))
     Logger.debug("res: %s", res)
     if res:
-        return _iris_fields(res[0])
+        return _iris_fields(res[0], geojson)
     return res
 
 
-def iris_from_coordinate(lon, lat):
+def iris_from_coordinate(lon, lat, geojson=False):
     """Get the IRIS code from a coordinate.
     """
     query_coordinate = _load_sql_file(Q_COORD)
@@ -106,5 +118,5 @@ def iris_from_coordinate(lon, lat):
     res = _query(query_coordinate, (lon, lat))
     Logger.debug("res: %s", res)
     if res:
-        return _iris_fields(res[0])
+        return _iris_fields(res[0], geojson)
     return res
