@@ -60,7 +60,7 @@ function updateMap(map, feature) {
 // Leaflet Map
 $(document).ready(function() {
   var search_button = document.getElementById('bsearch');
-  var map = L.map("Map").setView([47.5, 2], 7);
+  var map = L.map("Map").setView([47.5, 2], 6);
   // currying addressEvent function
   search_button.onclick = function() {
     return addressEvent(map);
