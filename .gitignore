@@ -65,3 +65,12 @@ target/
 
 # js
 pyris/api/static/bower/
+
+# data
+data/*.zip
+data/*.xls
+data/*.csv
+data/*.shp
+data/*.dbf
+data/*.prj
+data/*.shx
