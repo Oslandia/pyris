@@ -2,16 +2,17 @@
 
 {% block content %}
 
- <h2>Map</h2>
+ <h2>Interactive Map</h2>
 
  <!-- input search form -->
  <div class="container">
    <div class="row">
+     <p>Type an address to find and visualize the related IRIS.
+     </p>
      <div class="col-md-6">
        <h3>Search</h3>
        <div id="custom-search-input">
            <div class="input-group col-md-12">
-           <!-- <input type="text" id="address_search" class="form-control input-lg" placeholder="Address" /> -->
            <input type="text" id="address_search" data-provide="typeahead" class="form-control input-lg typeahead" placeholder="Address" />
            <span class="input-group-btn">
              <button class="btn btn-info btn-lg" type="button" id="bsearch">

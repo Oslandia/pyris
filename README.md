@@ -14,6 +14,21 @@ specific codes and data related to more than 50,000 districts, built by the
 * Running instance http://pyris.datajazz.io/
 * API documentation at http://pyris.datajazz.io/doc/
 
+## Interactive Map
+
+![map](./images/pyris-map.jpg)
+
+## REST API documentation
+
+![api](./images/pyris-doc-api.png)
+
+For instance, you can:
+
+* `URL/iris/0104?limit=5` to the some information about a specific IRIS code
+
+* `URL/search/q=place de la bourse Bordeaux` to get the IRIS data from a
+  specific address
+
 ## Data
 
 IRIS shapes at https://www.data.gouv.fr/fr/datasets/contour-des-iris-insee-tout-en-un/
@@ -44,15 +59,6 @@ Test the insertion with a simple:
 SELECT gid,depcom,nom_com,iris,typ_iris
 FROM geoiris LIMIT 10;
 ```
-
-## REST API
-
-You can:
-
-* `URL/iris/0104?limit=5` to the some information about a specific IRIS code
-
-* `URL/search/q=place de la bourse Bordeaux` to get the IRIS data from a
-  specific address
 
 ## Launch the Web App
 
