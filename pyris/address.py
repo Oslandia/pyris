@@ -3,8 +3,6 @@
 """French address geolocalizer API
 """
 
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 import slumber
 
 URL = "http://api-adresse.data.gouv.fr"

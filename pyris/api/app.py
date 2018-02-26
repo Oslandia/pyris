@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 import logging
-from collections import OrderedDict
 
-from flask import Blueprint, jsonify, render_template
-from flask_restplus import fields
-from flask.ext.restplus import Resource, Api, apidoc
+from flask import Blueprint, render_template
+from flask_restplus import Resource, Api, apidoc
 
 from pyris import address
 from pyris.api import extract
