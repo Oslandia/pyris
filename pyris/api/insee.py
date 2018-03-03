@@ -13,7 +13,7 @@ population_parser.add_argument("by", required=True, location='args',
 
 @api.route('/')
 class InseeData(Resource):
-    @api.doc('INSEE data list')
+    @api.doc(description='INSEE data list')
     def get(self):
         return ['population', 'activite', 'logement',
                 'menage', 'formation']
@@ -34,7 +34,7 @@ class IrisPopulation(Resource):
 @api.route('/population/distribution/<string:code>')
 class IrisPopulationDistribution(Resource):
     @api.doc(parser=population_parser,
-             description="get population for an IRIS")
+             description="get the population distribution for an IRIS")
     def get(self, code):
         if len(code) != 9:
             api.abort(400, "IRIS code is malformed (9 digits)")
