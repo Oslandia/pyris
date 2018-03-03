@@ -22,6 +22,10 @@ Q_LOGEMENT = "iris_logement.sql"
 Q_LOGEMENT_ROOM = "iris_logement_room.sql"
 Q_LOGEMENT_AREA = "iris_logement_area.sql"
 Q_LOGEMENT_YEAR = "iris_logement_year.sql"
+Q_EMPLOYMENT = "iris_activite.sql"
+Q_EMPLOYMENT_SEX = "iris_activite_sex.sql"
+Q_EMPLOYMENT_AGE = "iris_activite_age.sql"
+Q_EMPLOYMENT_SECTOR = "iris_activite_secteur.sql"
 
 Logger = logging.getLogger(__name__)
 
@@ -166,7 +170,6 @@ def get_iris_population(code):
     return _query(query_population, (code,), columns=True)
 
 
-
 def get_iris_population_age(code):
     """Get the population distribution by age for a specific IRIS
 
@@ -226,5 +229,35 @@ def get_iris_logement(code, by=None):
         query = _load_sql_file(Q_LOGEMENT_AREA)
     elif by == 'year':
         query = _load_sql_file(Q_LOGEMENT_YEAR)
+    data = _query(query, (code,), columns=True)
+    return _split_data(data)
+
+
+def get_iris_employment(code, by=None):
+    """Get the employment data for a specific IRIS
+
+    Parameters
+    ----------
+    code : str
+        IRIS code (9 digits)
+    by : str (optional)
+        Get data by sex, age
+
+    Returns
+    -------
+    list of dicts
+    """
+    if by not in (None, 'sex', 'age', 'sector'):
+        raise ValueError("Value {} for the 'by' parameter is not supported".format(by))
+    if by is None:
+        query = _load_sql_file(Q_EMPLOYMENT)
+        return _query(query, (code,), columns=True)
+    elif by == 'sex':
+        query = _load_sql_file(Q_EMPLOYMENT_SEX)
+    elif by == 'age':
+        query = _load_sql_file(Q_EMPLOYMENT_AGE)
+    elif by == 'sector':
+        query = _load_sql_file(Q_EMPLOYMENT_SECTOR)
+
     data = _query(query, (code,), columns=True)
     return _split_data(data)
