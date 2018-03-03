@@ -77,6 +77,25 @@ def _iris_fields(res, geojson=False):
     return data
 
 
+def _split_data(data):
+    """Split the keys of the data between 'properties' and 'data'
+
+    data: list (or None)
+        Result of a SQL query
+
+    Returns
+    -------
+    dict
+    """
+    if data is None:
+        return data
+    data = data[0]
+    properties = ["iris", "city", "citycode", "label"]
+    result = {k: data.pop(k) for k in properties}
+    result['data'] = data
+    return result
+
+
 def get_iris_field(code, limit=None, geojson=False):
     """Get some data from the IRIS code
 
@@ -147,6 +166,7 @@ def get_iris_population(code):
     return _query(query_population, (code,), columns=True)
 
 
+
 def get_iris_population_age(code):
     """Get the population distribution by age for a specific IRIS
 
@@ -160,7 +180,8 @@ def get_iris_population_age(code):
     list of dicts
     """
     query_population = _load_sql_file(Q_POPULATION_AGE)
-    return _query(query_population, (code,), columns=True)
+    data = _query(query_population, (code,), columns=True)
+    return _split_data(data)
 
 
 def get_iris_population_sex(code):
@@ -176,7 +197,8 @@ def get_iris_population_sex(code):
     dict
     """
     query_population = _load_sql_file(Q_POPULATION_SEX)
-    return _query(query_population, (code,), columns=True)
+    data = _query(query_population, (code,), columns=True)
+    return _split_data(data)
 
 
 def get_iris_logement(code, by=None):
@@ -197,10 +219,12 @@ def get_iris_logement(code, by=None):
         raise ValueError("Value {} for the 'by' parameter is not supported".format(by))
     if by is None:
         query = _load_sql_file(Q_LOGEMENT)
+        return _query(query, (code,), columns=True)
     elif by == 'room':
         query = _load_sql_file(Q_LOGEMENT_ROOM)
     elif by == 'area':
         query = _load_sql_file(Q_LOGEMENT_AREA)
     elif by == 'year':
         query = _load_sql_file(Q_LOGEMENT_YEAR)
-    return _query(query, (code,), columns=True)
+    data = _query(query, (code,), columns=True)
+    return _split_data(data)

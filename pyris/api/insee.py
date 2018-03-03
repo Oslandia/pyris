@@ -49,7 +49,7 @@ class IrisPopulationDistribution(Resource):
             rset = extract.get_iris_population_age(code)
         if not rset:
             api.abort(404, "IRIS code '{}' not found".format(code))
-        return rset[0]
+        return rset
 
 
 @api.route('/logement/<string:code>')
@@ -61,7 +61,7 @@ class IrisLogement(Resource):
         rset = extract.get_iris_logement(code)
         if not rset:
             api.abort(404, "IRIS code '{}' not found".format(code))
-        return rset[0]
+        return rset
 
 
 @api.route('/logement/distribution/<string:code>')
@@ -77,4 +77,4 @@ class IrisLogementDistribution(Resource):
         rset = extract.get_iris_logement(code, by=args['by'])
         if not rset:
             api.abort(404, "IRIS code '{}' not found".format(code))
-        return rset[0]
+        return rset
