@@ -7,8 +7,10 @@ api = Namespace('insee', description='Some stats from INSEE for each IRIS')
 
 population_parser = api.parser()
 population_parser.add_argument("by", required=True, location='args',
-                               help="By 'sex' or 'age'")
-
+                               help="By sex or age")
+logement_parser = api.parser()
+logement_parser.add_argument("by", required=True, location='args',
+                             help="By room, area or year")
 
 
 @api.route('/')
@@ -45,6 +47,32 @@ class IrisPopulationDistribution(Resource):
             rset = extract.get_iris_population_sex(code)
         if args['by'] == 'age':
             rset = extract.get_iris_population_age(code)
+        if not rset:
+            api.abort(404, "IRIS code '{}' not found".format(code))
+        return rset[0]
+
+
+@api.route('/logement/<string:code>')
+class IrisLogement(Resource):
+    @api.doc("get the housing data for an IRIS")
+    def get(self, code):
+        if len(code) != 9:
+            api.abort(400, "IRIS code is malformed (9 digits)")
+        rset = extract.get_iris_logement(code)
+        if not rset:
+            api.abort(404, "IRIS code '{}' not found".format(code))
+        return rset[0]
+
+
+@api.route('/logement/distribution/<string:code>')
+class IrisLogementDistribution(Resource):
+    @api.doc(parser=logement_parser,
+             description="get the housing data distribution for an IRIS")
+    def get(self, code):
+        if len(code) != 9:
+            api.abort(400, "IRIS code is malformed (9 digits)")
+        args = logement_parser.parse_args()
+        rset = extract.get_iris_logement(code, by=args['by'])
         if not rset:
             api.abort(404, "IRIS code '{}' not found".format(code))
         return rset[0]
