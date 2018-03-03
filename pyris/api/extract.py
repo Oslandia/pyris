@@ -15,6 +15,7 @@ _QUERY_DIR = os.path.join(_HERE, "queries")
 Q_IRIS = "iris.sql"
 Q_COMPIRIS = "complete_iris.sql"
 Q_COORD = "coordinate.sql"
+Q_POPULATION = "iris_population.sql"
 
 Logger = logging.getLogger(__name__)
 
@@ -121,3 +122,20 @@ def iris_from_coordinate(lon, lat, geojson=False):
     if res:
         return _iris_fields(res[0], geojson)
     return res
+
+
+def get_iris_population(code):
+    """Get the population for a specific IRIS
+
+    Parameters
+    ----------
+    code : str
+        IRIS code (9 digits)
+
+    Returns
+    -------
+    list of dicts
+    """
+    query_population = _load_sql_file(Q_POPULATION)
+    Logger.debug("Query '%s'", query_population)
+    return _query(query_population, (code,), columns=True)
