@@ -16,6 +16,8 @@ Q_IRIS = "iris.sql"
 Q_COMPIRIS = "complete_iris.sql"
 Q_COORD = "coordinate.sql"
 Q_POPULATION = "iris_population.sql"
+Q_POPULATION_AGE = "iris_population_age.sql"
+Q_POPULATION_SEX = "iris_population_sex.sql"
 
 Logger = logging.getLogger(__name__)
 
@@ -138,4 +140,36 @@ def get_iris_population(code):
     """
     query_population = _load_sql_file(Q_POPULATION)
     Logger.debug("Query '%s'", query_population)
+    return _query(query_population, (code,), columns=True)
+
+
+def get_iris_population_age(code):
+    """Get the population distribution by age for a specific IRIS
+
+    Parameters
+    ----------
+    code : str
+        IRIS code (9 digits)
+
+    Returns
+    -------
+    list of dicts
+    """
+    query_population = _load_sql_file(Q_POPULATION_AGE)
+    return _query(query_population, (code,), columns=True)
+
+
+def get_iris_population_sex(code):
+    """Get the population distribution by sex and age for a specific IRIS
+
+    Parameters
+    ----------
+    code : str
+        IRIS code (9 digits)
+
+    Returns
+    -------
+    dict
+    """
+    query_population = _load_sql_file(Q_POPULATION_SEX)
     return _query(query_population, (code,), columns=True)
