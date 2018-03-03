@@ -22,6 +22,10 @@ Q_LOGEMENT = "iris_logement.sql"
 Q_LOGEMENT_ROOM = "iris_logement_room.sql"
 Q_LOGEMENT_AREA = "iris_logement_area.sql"
 Q_LOGEMENT_YEAR = "iris_logement_year.sql"
+Q_EMPLOYMENT = "iris_activite.sql"
+Q_EMPLOYMENT_SEX = "iris_activite_sex.sql"
+Q_EMPLOYMENT_AGE = "iris_activite_age.sql"
+Q_EMPLOYMENT_SECTOR = "iris_activite_secteur.sql"
 
 Logger = logging.getLogger(__name__)
 
@@ -75,6 +79,25 @@ def _iris_fields(res, geojson=False):
                 "geometry": json.loads(res[6]),
                 "properties": data}
     return data
+
+
+def _split_data(data):
+    """Split the keys of the data between 'properties' and 'data'
+
+    data: list (or None)
+        Result of a SQL query
+
+    Returns
+    -------
+    dict
+    """
+    if data is None:
+        return data
+    data = data[0]
+    properties = ["iris", "city", "citycode", "label"]
+    result = {k: data.pop(k) for k in properties}
+    result['data'] = data
+    return result
 
 
 def get_iris_field(code, limit=None, geojson=False):
@@ -160,7 +183,8 @@ def get_iris_population_age(code):
     list of dicts
     """
     query_population = _load_sql_file(Q_POPULATION_AGE)
-    return _query(query_population, (code,), columns=True)
+    data = _query(query_population, (code,), columns=True)
+    return _split_data(data)
 
 
 def get_iris_population_sex(code):
@@ -176,7 +200,8 @@ def get_iris_population_sex(code):
     dict
     """
     query_population = _load_sql_file(Q_POPULATION_SEX)
-    return _query(query_population, (code,), columns=True)
+    data = _query(query_population, (code,), columns=True)
+    return _split_data(data)
 
 
 def get_iris_logement(code, by=None):
@@ -197,10 +222,42 @@ def get_iris_logement(code, by=None):
         raise ValueError("Value {} for the 'by' parameter is not supported".format(by))
     if by is None:
         query = _load_sql_file(Q_LOGEMENT)
+        return _query(query, (code,), columns=True)
     elif by == 'room':
         query = _load_sql_file(Q_LOGEMENT_ROOM)
     elif by == 'area':
         query = _load_sql_file(Q_LOGEMENT_AREA)
     elif by == 'year':
         query = _load_sql_file(Q_LOGEMENT_YEAR)
-    return _query(query, (code,), columns=True)
+    data = _query(query, (code,), columns=True)
+    return _split_data(data)
+
+
+def get_iris_employment(code, by=None):
+    """Get the employment data for a specific IRIS
+
+    Parameters
+    ----------
+    code : str
+        IRIS code (9 digits)
+    by : str (optional)
+        Get data by sex, age
+
+    Returns
+    -------
+    list of dicts
+    """
+    if by not in (None, 'sex', 'age', 'sector'):
+        raise ValueError("Value {} for the 'by' parameter is not supported".format(by))
+    if by is None:
+        query = _load_sql_file(Q_EMPLOYMENT)
+        return _query(query, (code,), columns=True)
+    elif by == 'sex':
+        query = _load_sql_file(Q_EMPLOYMENT_SEX)
+    elif by == 'age':
+        query = _load_sql_file(Q_EMPLOYMENT_AGE)
+    elif by == 'sector':
+        query = _load_sql_file(Q_EMPLOYMENT_SECTOR)
+
+    data = _query(query, (code,), columns=True)
+    return _split_data(data)
