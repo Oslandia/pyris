@@ -72,6 +72,8 @@ class IrisLogementDistribution(Resource):
         if len(code) != 9:
             api.abort(400, "IRIS code is malformed (9 digits)")
         args = logement_parser.parse_args()
+        if args['by'] not in ('room', 'area', 'year'):
+            api.abort(400, "By query param should be 'year', 'room' or 'area'")
         rset = extract.get_iris_logement(code, by=args['by'])
         if not rset:
             api.abort(404, "IRIS code '{}' not found".format(code))
