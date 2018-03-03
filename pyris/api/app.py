@@ -7,6 +7,7 @@ from flask_restplus import Resource, Api, apidoc
 
 from pyris import address
 from pyris.api import extract
+from pyris.api.insee import api as insee_api
 
 
 Logger = logging.getLogger(__name__)
@@ -30,7 +31,7 @@ api = Api(service,
           ui=False,
           version='0.1',
           description="Retrieve some data related to the IRIS codes. Look for an IRIS from an address.")
-
+api.add_namespace(insee_api)
 
 geojson_parser = api.parser()
 geojson_parser.add_argument("geojson", type=bool, default=False, location='args',
