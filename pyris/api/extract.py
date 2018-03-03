@@ -31,7 +31,7 @@ def _load_sql_file(fname):
         return "".join(line for line in fobj if not skip(line))
 
 
-def _query(q, params=None):
+def _query(q, params=None, columns=False):
     """Carry out a SQL query
 
     Only fetch one result
@@ -46,7 +46,12 @@ def _query(q, params=None):
                 cu.execute(q, params)
             else:
                 cu.execute(q)
-            return cu.fetchall()
+            rset = cu.fetchall()
+            if rset and columns:
+                names = [x.name for x in cu.description]
+                return [{x: v for x, v in zip(names, values)}
+                        for values in rset]
+            return rset
 
 
 def _iris_fields(res, geojson=False):
