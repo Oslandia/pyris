@@ -15,8 +15,15 @@ class InseeData(Resource):
 
 
 @api.route('/population/<string:code>')
-class IrisCode(Resource):
-    @api.doc("get population for an IRIS")
+class IrisPopulation(Resource):
+    @api.doc("get the population for an IRIS")
+    def get(self, code):
+        if len(code) != 9:
+            api.abort(400, "IRIS code is malformed (9 digits)")
+        rset = extract.get_iris_population(code)
+        if not rset:
+            api.abort(404, "IRIS code '{}' not found".format(code))
+        return rset[0]
     def get(self, code):
         if len(code) != 9:
             api.abort(400, "IRIS code is malformed (9 digits)")
