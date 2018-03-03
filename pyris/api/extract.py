@@ -18,6 +18,10 @@ Q_COORD = "coordinate.sql"
 Q_POPULATION = "iris_population.sql"
 Q_POPULATION_AGE = "iris_population_age.sql"
 Q_POPULATION_SEX = "iris_population_sex.sql"
+Q_LOGEMENT = "iris_logement.sql"
+Q_LOGEMENT_ROOM = "iris_logement_room.sql"
+Q_LOGEMENT_AREA = "iris_logement_area.sql"
+Q_LOGEMENT_YEAR = "iris_logement_year.sql"
 
 Logger = logging.getLogger(__name__)
 
@@ -173,3 +177,30 @@ def get_iris_population_sex(code):
     """
     query_population = _load_sql_file(Q_POPULATION_SEX)
     return _query(query_population, (code,), columns=True)
+
+
+def get_iris_logement(code, by=None):
+    """Get the housing data for a specific IRIS
+
+    Parameters
+    ----------
+    code : str
+        IRIS code (9 digits)
+    by : str (optional)
+        Get data by room, area or year
+
+    Returns
+    -------
+    dict
+    """
+    if by not in (None, 'room', 'area', 'year'):
+        raise ValueError("Value {} for the 'by' parameter is not supported".format(by))
+    if by is None:
+        query = _load_sql_file(Q_LOGEMENT)
+    elif by == 'room':
+        query = _load_sql_file(Q_LOGEMENT_ROOM)
+    elif by == 'area':
+        query = _load_sql_file(Q_LOGEMENT_AREA)
+    elif by == 'year':
+        query = _load_sql_file(Q_LOGEMENT_YEAR)
+    return _query(query, (code,), columns=True)
