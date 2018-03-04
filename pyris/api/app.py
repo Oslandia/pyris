@@ -25,6 +25,19 @@ def index():
 def map():
     return render_template("map.html")
 
+@service.route('/iris/<code>')
+def iris(code):
+    data = extract.get_complete_iris(code)
+    if not data:
+        return 404, "IRIS code '{}' not found".format(code)
+    print(data)
+    return render_template("iris.html",
+                           iris=data['complete_code'],
+                           name=data['name'],
+                           citycode=data['citycode'],
+                           city=data['city'],
+                           iris_type=data['type'])
+
 
 api = Api(service,
           title='INSEE/IRIS Geolocalizer',
