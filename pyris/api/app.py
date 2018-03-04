@@ -29,6 +29,7 @@ def map():
 api = Api(service,
           title='INSEE/IRIS Geolocalizer',
           ui=False,
+          prefix='/api',
           version='0.1',
           description="Retrieve some data related to the IRIS codes. Look for an IRIS from an address.")
 api.add_namespace(insee_api)
