@@ -3,7 +3,7 @@
 import logging
 
 from flask import Blueprint, render_template
-from flask_restplus import Resource, Api, apidoc
+from flask_restplus import Resource, Api, apidoc, inputs
 
 from pyris import address
 from pyris.api import extract
@@ -34,7 +34,7 @@ api = Api(service,
 api.add_namespace(insee_api)
 
 geojson_parser = api.parser()
-geojson_parser.add_argument("geojson", type=bool, default=False, location='args',
+geojson_parser.add_argument("geojson", type=inputs.boolean, default=False, location='args',
                             help='GeoJSON')
 
 iris_code_parser = geojson_parser.copy()
