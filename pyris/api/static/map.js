@@ -51,7 +51,7 @@ function updateMap(map, feature) {
   // console.log(feature.geometry.coordinates);
   var coords = feature.geometry.coordinates.reverse();
   $.ajax({
-    url: '/coords',
+    url: '/api/coords',
     dataType: 'json',
     data: {
       lat: coords[0],
