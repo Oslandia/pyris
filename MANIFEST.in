@@ -5,11 +5,15 @@ recursive-include pyris *
 prune pyris/api/static/bower
 
 include pyris/api/static/bower/jquery/dist/jquery.js
-include pyris/api/static/bower/bootstrap/dist/js/bootstrap.min.js
-include pyris/api/static/bower/bootstrap/dist/css/bootstrap.min.css
-include pyris/api/static/bower/leaflet/dist/leaflet.css
-include pyris/api/static/bower/leaflet/dist/leaflet.js
+include pyris/api/static/bower/leaflet/dist/*
+include pyris/api/static/bower/leaflet/dist/images/*
+include pyris/api/static/bower/bootstrap/dist/css/*.css
+include pyris/api/static/bower/bootstrap/dist/js/*.js
+include pyris/api/static/bower/bootstrap/dist/fonts/*
 include pyris/api/static/bower/bootstrap3-typeahead/bootstrap3-typeahead.js
+include pyris/api/static/bower/highcharts/highcharts.js
+include pyris/api/static/bower/turfjs/turf.min.js
 include pyris/api/static/map.js
+include pyris/api/static/iris.js
 
 global-exclude *.pyc
