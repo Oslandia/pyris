@@ -1,9 +1,9 @@
 -- Retrieve complete IRIS code (nine digits)
 
 SELECT DISTINCT
-   depcom
-  ,iris
+  iris
   ,nom_com
+  ,depcom
   ,nom_iris
   ,dcomiris
   ,typ_iris

@@ -222,7 +222,8 @@ def get_iris_logement(code, by=None):
         raise ValueError("Value {} for the 'by' parameter is not supported".format(by))
     if by is None:
         query = _load_sql_file(Q_LOGEMENT)
-        return _query(query, (code,), columns=True)
+        rset = _query(query, (code,), columns=True)
+        return rset[0] if rset else rset
     elif by == 'room':
         query = _load_sql_file(Q_LOGEMENT_ROOM)
     elif by == 'area':
@@ -251,7 +252,8 @@ def get_iris_employment(code, by=None):
         raise ValueError("Value {} for the 'by' parameter is not supported".format(by))
     if by is None:
         query = _load_sql_file(Q_EMPLOYMENT)
-        return _query(query, (code,), columns=True)
+        rset = _query(query, (code,), columns=True)
+        return rset[0] if rset else rset
     elif by == 'sex':
         query = _load_sql_file(Q_EMPLOYMENT_SEX)
     elif by == 'age':

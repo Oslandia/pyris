@@ -3,7 +3,7 @@
 import logging
 
 from flask import Blueprint, render_template
-from flask_restplus import Resource, Api, apidoc
+from flask_restplus import Resource, Api, apidoc, inputs
 
 from pyris import address
 from pyris.api import extract
@@ -25,16 +25,30 @@ def index():
 def map():
     return render_template("map.html")
 
+@service.route('/iris/<code>')
+def iris(code):
+    data = extract.get_complete_iris(code)
+    if not data:
+        return 404, "IRIS code '{}' not found".format(code)
+    print(data)
+    return render_template("iris.html",
+                           iris=data['complete_code'],
+                           name=data['name'],
+                           citycode=data['citycode'],
+                           city=data['city'],
+                           iris_type=data['type'])
+
 
 api = Api(service,
           title='INSEE/IRIS Geolocalizer',
           ui=False,
+          prefix='/api',
           version='0.1',
           description="Retrieve some data related to the IRIS codes. Look for an IRIS from an address.")
 api.add_namespace(insee_api)
 
 geojson_parser = api.parser()
-geojson_parser.add_argument("geojson", type=bool, default=False, location='args',
+geojson_parser.add_argument("geojson", type=inputs.boolean, default=False, location='args',
                             help='GeoJSON')
 
 iris_code_parser = geojson_parser.copy()
