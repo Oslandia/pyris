@@ -80,12 +80,16 @@ function addGeoJSONLayer(map, feature) {
                   + "</li><li><b>Citycode</b>: " + feature.properties.citycode + "</li>"
                   + "<li><b>Name</b>: " + feature.properties.name + "</li>"
                   + "<li><b>Type</b>: " + feature.properties.type + "</li>"
-                  + "<li><b>Iris</b>: " + feature.properties.iris + "</li>" + "</ul>")
+                  + "<li><b>Iris</b>: " + feature.properties.iris + "</li>"
+                  + "</ul>" + "<b>Click to get more info!</b>")
     .on('mouseover', function(e) {
       this.openPopup();
     })
     .on('mouseout', function(e) {
       this.closePopup();
+    })
+    .on('click', function(e) {
+      window.location.assign("/iris/" + feature.properties.citycode + feature.properties.iris);
     });
   layer.addTo(map);
 }
