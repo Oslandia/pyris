@@ -130,6 +130,7 @@ def get_iris_list_by_city_code(code):
         City code. Five digits.
     """
     query=_load_sql_file(Q_IRIS_BY_CITY_CODE)
+    Logger.debug("Query: %s", query)
     res=_query(query, (code,))
     Logger.debug("res: %s", res)
     return [x[0] for x in res] if res else res
