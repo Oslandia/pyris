@@ -114,7 +114,7 @@ class IrisListFromCityCode(Resource):
         Logger.info("Looking for iris at coordinates %s, %s", coord["lat"], ["lon"])
         iris=extract.iris_from_coordinate(coord["lon"], coord["lat"])
         iris_list=extract.get_iris_list_by_city_code(iris["citycode"])
-        return iris_list
+        return {"city_name": iris["city"], "city_code": iris["citycode"], "iris_list": iris_list}
 
 
 @api.route("/coords")
