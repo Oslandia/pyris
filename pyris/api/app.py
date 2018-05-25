@@ -99,7 +99,7 @@ class IrisListFromCityCode(Resource):
 
 
 @api.route("/city/search/<string:query>")
-class IrisListFromCityCode(Resource):
+class IrisListFromQuery(Resource):
     @api.doc(parser=api.parser(),
              description="Get the list of all the iris codes in the city matching the query")
     def get(self, query):
