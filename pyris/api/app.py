@@ -86,6 +86,18 @@ class IrisCode(Resource):
         return iris
 
 
+@api.route('/city/<string:code>')
+class IrisListFromCityCode(Resource):
+    @api.doc(parser=api.parser(),
+             description="get the list of complete iris codes for a city code")
+    def get(self, code):
+        Logger.info('looking for IRIS in the city code %s', code)
+        iris=extract.get_iris_list_by_city_code(code)
+        if not iris:
+            api.abort(404, "City code '{}' not found".format(code))
+        return iris
+
+
 @api.route("/coords")
 class IrisFromCoordinates(Resource):
     @api.doc(parser=coords_parser,

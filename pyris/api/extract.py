@@ -13,6 +13,7 @@ from pyris.config import DATABASE
 _HERE = os.path.abspath(os.path.dirname(__file__))
 _QUERY_DIR = os.path.join(_HERE, "queries")
 Q_IRIS = "iris.sql"
+Q_IRIS_BY_CITY_CODE = "iris_by_city_code.sql"
 Q_COMPIRIS = "complete_iris.sql"
 Q_COORD = "coordinate.sql"
 Q_POPULATION = "iris_population.sql"
@@ -120,6 +121,18 @@ def get_iris_field(code, limit=None, geojson=False):
                     "features": data}
         return data
     return res
+
+
+def get_iris_list_by_city_code(code):
+    """Get the list of IRIS in a city by its code
+    
+    code: str
+        City code. Five digits.
+    """
+    query=_load_sql_file(Q_IRIS_BY_CITY_CODE)
+    res=_query(query, (code,))
+    Logger.debug("res: %s", res)
+    return [x[0] for x in res] if res else res
 
 
 def get_complete_iris(code, geojson=False):
