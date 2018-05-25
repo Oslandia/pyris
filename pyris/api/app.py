@@ -89,9 +89,9 @@ class IrisCode(Resource):
 @api.route('/city/code/<string:code>')
 class IrisListFromCityCode(Resource):
     @api.doc(parser=api.parser(),
-             description="Look for all the iris codes in the city mathing the city code")
+             description="Look for all the iris codes in the city matching a city code")
     def get(self, code):
-        Logger.info("looking for IRIS in the city code %s", code)
+        Logger.info("looking for IRIS in the city %s", code)
         iris=extract.get_iris_list_by_city_code(code)
         if not iris:
             api.abort(404, "City code '{}' not found".format(code))
@@ -107,7 +107,9 @@ class IrisListFromCityCode(Resource):
         Logger.info("Looking for longitude and latitude for the query %s", query)
         coord=address.coordinate(query)
         if coord["address"] is None:
-            return[]
+            # Requests sent to '/api/search' that match nothing do not return a 404 error like other requests.
+            # Is this an intentional choice?
+            api.abort(404, "No city found matching that query")
         # I'm pretty sure the preferred order is usually latitude first, then longitude
         Logger.info("Looking for iris at coordinates %s, %s", coord["lat"], ["lon"])
         iris=extract.iris_from_coordinate(coord["lon"], coord["lat"])
