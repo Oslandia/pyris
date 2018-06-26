@@ -9,5 +9,5 @@ SELECT
   ,typ_iris
   ,st_asGeoJSON(geom) as geom
 FROM geoiris
-WHERE geom && st_makepoint(%s, %s)
+WHERE st_within(st_setSRID(st_makepoint(%s, %s), 4326), geom)
 LIMIT 1;
