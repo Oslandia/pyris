@@ -71,7 +71,7 @@ def create_app(env='Defaults'):
     if cfgfile:
         app.config.update(load_yaml_config(cfgfile))
 
-    if not 'LOG_LEVEL' in app.config:
+    if 'LOG_LEVEL' not in app.config:
         set_level('debug')
     else:
         set_level(app.config['LOG_LEVEL'])
