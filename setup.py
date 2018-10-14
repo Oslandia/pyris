@@ -3,15 +3,15 @@
 import setuptools
 
 
-with open("README.md") as fobj:
+with open("README.rst") as fobj:
     LONG_DESCRIPTION = fobj.read()
 
-INSTALL_REQUIRES = ["flask", "flask-restplus", "psycopg2-binary", "pyaml",
-                    "slumber", "gunicorn"]
+INSTALL_REQUIRES = ["Flask==1.0.2", "flask-restplus==0.12.1",
+                    "psycopg2-binary", "pyaml", "slumber", "gunicorn==19.9"]
 
 setuptools.setup(
     name='pyris',
-    version='0.6',
+    version='0.7',
     license='BSD',
     url='https://github.com/garaud/pyris',
     packages=setuptools.find_packages(exclude=['data', 'app.yml']),
