@@ -21,6 +21,9 @@ specific codes and data related to more than 50,000 districts, built by the
 
 ## IRIS stats
 
+Some Insee stats for each IRIS, census 2013: population (by sex and age), employment
+and housing.
+
 ![iris-stats](./images/iris-stats.png)
 
 ## REST API documentation
@@ -64,6 +67,9 @@ Test the insertion with a simple:
 SELECT gid,depcom,nom_com,iris,typ_iris
 FROM geoiris LIMIT 10;
 ```
+
+There are two other scripts `04-download-infra-insee.sh` and `05-insee-to-db.sh`
+which download, process and insert some Insee statistics data for each Iris.
 
 ## Launch the Web App
 
