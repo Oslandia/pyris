@@ -1,11 +1,12 @@
 # Pyris
 
-IRIS INSEE Geolocalizer
+IRIS insee Geolocalizer
 
-Pyris try to collect data about
-[IRIS](http://www.insee.fr/fr/methodes/default.asp?page=zonages/iris.htm) from
-the French [INSEE](http://www.insee.fr/en/) institute. It's possible from an
-address to find the IRIS code and some related data.
+Pyris collects some data about
+[IRIS](http://www.insee.fr/fr/methodes/default.asp?page=zonages/iris.htm) from the
+French [INSEE](http://www.insee.fr/en/) institute. It's possible from an address to
+find the IRIS code and some related data, e.g. some population, employment or housing
+stats.
 
 [IRIS](http://www.insee.fr/fr/methodes/default.asp?page=zonages/iris.htm) are
 specific codes and data related to more than 50,000 districts, built by the
@@ -17,6 +18,10 @@ specific codes and data related to more than 50,000 districts, built by the
 ## Interactive Map
 
 ![map](./images/pyris-map.jpg)
+
+## IRIS stats
+
+![iris-stats](./images/iris-stats.png)
 
 ## REST API documentation
 
