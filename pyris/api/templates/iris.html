@@ -2,7 +2,13 @@
 
 {% block content %}
 
- <h2>IRIS Stats &ndash; {{city|capitalize}} / {{name|capitalize}}</h2>
+<h2>IRIS Stats &ndash; {{city|capitalize}} / {{name|capitalize}}</h2>
+
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><a href="/map">Map</a></li>
+  <li class="active">IRIS {{name|capitalize}}</li>
+</ol>
 
  <div class="container" id="irisSummary" data-iris="{{iris}}">
   <div class="container">
@@ -10,7 +16,7 @@
       <div class="col-md-4">
         <div class="panel panel-primary">
           <div class="panel-heading">
-            <h4 id="titlePanel"></h4>
+            <h4 id="titlePanel">Description</h4>
           </div>
           <ul class="list-group">
             <li class="list-group-item" id="iris"><b>Iris</b>: {{iris}}</li>
@@ -26,10 +32,17 @@
     </div>
   </div>
 
+  <ul>
+  <li><h3><a href="#population-title">Population</a></li></h3>
+  <li><h3><a href="#housing-title">Housing</a></li></h3>
+  <li><h3><a href="#employment-title">Employment</a></li></h3>
+  </ul>
 
-  <h2>Population</h2>
+  <hr>
 
-  <p><b id="population">Total : </b></p>
+  <h2 id="population-title">Population</h2>
+
+  <h3><b id="population">Total : </b></h3>
 
   <div id="populationSex" data-iris="{{iris}}" style="width: 100%; height:400px;">
   </div>
@@ -51,8 +64,9 @@
     </div>
   </div>
 
+  <hr>
 
-  <h2>Housing</h2>
+  <h2 id="housing-title">Housing</h2>
 
   <div class="container">
     <div class="row">
@@ -88,8 +102,9 @@
     </div>
   </div>
 
+  <hr>
 
-    <h2>Employment</h2>
+    <h2 id="employment-title">Employment</h2>
 
     <div class="container">
     <div class="row">
