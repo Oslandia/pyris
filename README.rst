@@ -1,0 +1,120 @@
+Pyris
+=====
+
+IRIS Insee Geolocalizer
+
+Pyris collects some data about
+`IRIS <http://www.insee.fr/fr/methodes/default.asp?page=zonages/iris.htm>`__
+from the French `INSEE <http://www.insee.fr/en/>`__ institute. It's
+possible from an address to find the IRIS code and some **statistics
+data**, e.g. population, employment or housing data.
+
+`IRIS <http://www.insee.fr/fr/methodes/default.asp?page=zonages/iris.htm>`__
+are specific codes and data related to more than 50,000 districts, built
+by the `National Institute of Statistics and Economic
+Studies <http://www.insee.fr/en/>`__.
+
+-  Running instance http://pyris.datajazz.io/
+-  API documentation at http://pyris.datajazz.io/doc/
+
+Interactive Map
+---------------
+
+.. figure:: ./images/pyris-map.jpg
+   :alt: map
+
+   map
+
+IRIS stats
+----------
+
+Some Insee stats for each IRIS, census 2013: population (by sex and
+age), employment and housing.
+
+.. figure:: ./images/iris-stats.png
+   :alt: iris-stats
+
+   iris-stats
+
+REST API documentation
+----------------------
+
+.. figure:: ./images/pyris-doc-api.png
+   :alt: api
+
+   api
+
+For instance, you can:
+
+-  ``URL/iris/0104?limit=5`` to the some information about a specific
+   IRIS code
+
+-  ``URL/search/q=place de la bourse Bordeaux`` to get the IRIS data
+   from a specific address
+
+Data
+----
+
+IRIS shapes at
+https://www.data.gouv.fr/fr/datasets/contour-des-iris-insee-tout-en-un/
+
+Go to the ``data`` directory and then:
+
+-  ``./01-download-data.sh``
+
+You have to install postgreSQL and PostGIS. For Debian:
+
+::
+
+    sudo apt-get install postgresql postgis
+
+Create a database name ``pyris`` with:
+
+-  ``02-create-database.sh``
+-  and ``03-insert-data.sh`` to insert data
+
+You have to be a PostgreSQL superuser to create the postgis extension
+for your database. If it's not the case, you can do:
+
+-  ``su``
+-  ``su - postgres``
+-  ``psql pyris -c "CREATE EXTENSION postgis;"``
+
+Test the insertion with a simple:
+
+.. code:: sql
+
+    SELECT gid,depcom,nom_com,iris,typ_iris
+    FROM geoiris LIMIT 10;
+
+There are two other scripts ``04-download-infra-insee.sh`` and
+``05-insee-to-db.sh`` which download, process and insert some Insee
+statistics data for each Iris.
+
+Launch the Web App
+------------------
+
+First, download the few CSS & JavaScript dependencies with a
+``bower install`` (just a Bootstrap and jQuery).
+
+Then : ``> gunicorn -b 127.0.0.1:5555 pyris.api.run:app`` or
+``> gunicorn -b 127.0.0.1:5555 --env PYRIS_APP_SETTINGS=./appdev.yml pyris.api.run:app``
+if you have to specify db credentials or logging Flask app
+configuration.
+
+See an `example of a app.yml
+file <https://github.com/garaud/pyris/blob/master/app.yml>`__
+
+Visit http://localhost:5555/pyris
+
+Requirements
+------------
+
+-  postgresql
+-  postgis
+
+-  flask
+-  flask restplus
+-  psycopg2
+-  slumber
+-  pyaml
