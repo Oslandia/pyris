@@ -5,8 +5,9 @@ SELECT
   ,com AS citycode
   ,libcom as city
   ,libiris as label
-  ,p13_pop as population
-  ,p13_poph as population_male
-  ,p13_popf as population_female
+  ,p_pop as population
+  ,p_poph as population_male
+  ,p_popf as population_female
+  ,census
 FROM insee.population
 WHERE iris = %s;

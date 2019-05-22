@@ -5,11 +5,12 @@ SELECT
   ,com AS citycode
   ,libcom as city
   ,libiris as label
-  ,p13_log as logement
-  ,p13_rp as main_residence
-  ,p13_rsecocc as second_residence
-  ,p13_logvac as unoccupied
-  ,p13_maison as house
-  ,p13_appart as appartment
+  ,p_log as logement
+  ,p_rp as main_residence
+  ,p_rsecocc as second_residence
+  ,p_logvac as unoccupied
+  ,p_maison as house
+  ,p_appart as appartment
+  ,census
 FROM insee.logement
 WHERE iris = %s;
