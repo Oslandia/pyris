@@ -57,3 +57,90 @@ def test_api_city_search(client):
     data = resp.json
     assert data["city_name"] == "Bordeaux"
     assert len(data["iris_list"]) > 33
+
+
+def test_api_insee_population(client):
+    code_iris = '693810101'
+    resp = client.get("/api/insee/population/" + code_iris)
+    assert resp.status_code == 200
+    data = resp.json
+    assert data["iris"] == code_iris
+    assert data["citycode"] == "69381"
+    assert "population" in data
+
+
+def test_api_insee_population_distribution(client):
+    code_iris = '693810101'
+    # by age
+    resp = client.get("/api/insee/population/distribution/" + code_iris,
+                      query_string={"by": "age"})
+    assert resp.status_code == 200
+    data = resp.json
+    assert data["iris"] == code_iris
+    assert data["citycode"] == "69381"
+    assert "population_15_29" in data["data"]
+
+    # by sex
+    resp = client.get("/api/insee/population/distribution/" + code_iris,
+                      query_string={"by": "sex"})
+    assert resp.status_code == 200
+    data = resp.json
+    assert data["iris"] == code_iris
+    assert data["citycode"] == "69381"
+    assert "female_15_29" in data["data"]
+
+
+def test_api_insee_logement(client):
+    code_iris = '693810101'
+    resp = client.get("/api/insee/logement/" + code_iris)
+    assert resp.status_code == 200
+    data = resp.json
+    assert data["iris"] == code_iris
+    assert data["citycode"] == "69381"
+    assert "logement" in data
+
+
+def test_api_insee_logement_distribution(client):
+    code_iris = '693810101'
+
+    # by room
+    resp = client.get("/api/insee/logement/distribution/" + code_iris,
+                      query_string={"by": "room"}
+    )
+    assert resp.status_code == 200
+    data = resp.json
+    assert data["iris"] == code_iris
+    assert data["citycode"] == "69381"
+    assert "main_residence_2_room" in data["data"]
+
+
+def test_api_insee_activite(client):
+    code_iris = '693810101'
+    resp = client.get("/api/insee/activite/" + code_iris)
+    assert resp.status_code == 200
+    data = resp.json
+    assert data["iris"] == code_iris
+    assert data["citycode"] == "69381"
+    assert "actif" in data
+    assert "chomeur" in data
+
+
+def test_api_insee_activite_distribution(client):
+    code_iris = '693810101'
+    # by age
+    resp = client.get("/api/insee/activite/distribution/" + code_iris,
+                      query_string={"by": "age"})
+    assert resp.status_code == 200
+    data = resp.json
+    assert data["iris"] == code_iris
+    assert data["citycode"] == "69381"
+    assert "actif_25_54" in data["data"]
+
+    # by sex
+    resp = client.get("/api/insee/activite/distribution/" + code_iris,
+                      query_string={"by": "sex"})
+    assert resp.status_code == 200
+    data = resp.json
+    assert data["iris"] == code_iris
+    assert data["citycode"] == "69381"
+    assert "femme_actif" in data["data"]
