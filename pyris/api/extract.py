@@ -49,7 +49,7 @@ def _query(q, params=None, columns=False):
     Only fetch one result
     """
     Logger.debug("processing query '%s'", q)
-    with psycopg2.connect(database="pyris",
+    with psycopg2.connect(database=DATABASE["DBNAME"],
                           user=DATABASE['USER'],
                           password=DATABASE.get('PASSWORD'),
                           host=DATABASE['HOST']) as cnx:

@@ -4,6 +4,7 @@ flask:
     LOG_LEVEL: debug
 
 database:
+    DBNAME: DBNAME
     USER: USERNAME
     HOST: localhost
     # PASSWORD: PASSWORD
