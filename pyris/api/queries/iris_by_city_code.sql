@@ -1,5 +1,5 @@
 -- Get all the IRIS in a city by its code
 
-SELECT dcomiris
+SELECT code_iris
 FROM geoiris
-WHERE depcom = %s
+WHERE insee_com = %s
