@@ -9,6 +9,9 @@ database:
     HOST: localhost
     # PASSWORD: PASSWORD
 
+geocoder:
+  url: http://api-adresse.data.gouv.fr
+
 uwsgi:
     master: true
     pythonpath: ~/src/pyris

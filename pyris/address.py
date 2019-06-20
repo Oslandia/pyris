@@ -5,7 +5,8 @@
 
 import slumber
 
-URL = "http://api-adresse.data.gouv.fr"
+from pyris.conf import GEOCODER_URL as URL
+
 api = slumber.API(URL)
 
 
