@@ -3,11 +3,30 @@
 """French address geolocalizer API
 """
 
-import slumber
+from requests.exceptions import ConnectionError
 
+import slumber
 from pyris.config import GEOCODER_URL as URL
 
+URL_CALLBACK = "http://api-adresse.data.gouv.fr"
+
 api = slumber.API(URL)
+api_callback = slumber.API(URL_CALLBACK)
+
+
+def _search(q, postcode, citycode, lat, lon, limit):
+    """Allow to callback to the national geocoder service if the local one fails
+    """
+    try:
+        resp = api.search.get(q=q, postcode=postcode, citycode=citycode, lat=lat,
+                              lon=lon, limit=limit)
+        if not resp["features"]:
+            resp = api_callback.search.get(q=q, postcode=postcode, citycode=citycode,
+                                           lat=lat, lon=lon, limit=limit)
+    except ConnectionError:
+        resp = api_callback.search.get(q=q, postcode=postcode, citycode=citycode,
+                                       lat=lat, lon=lon, limit=limit)
+    return resp
 
 
 def coordinate(q, postcode, citycode, lat, lon, limit):
@@ -15,11 +34,11 @@ def coordinate(q, postcode, citycode, lat, lon, limit):
 
     q: str
     postcode: str
-    citycode: str    
-    
+    citycode: str
+
     Return (longitude, latitde)
     """
-    resources = api.search.get(q=q, postcode=postcode, citycode=citycode, lat=lat, lon=lon, limit=limit)
+    resources = _search(q=q, postcode=postcode, citycode=citycode, lat=lat, lon=lon, limit=limit)
     if len(resources['features']) == 0:
         return {"lon": None,
                 "lat": None,
