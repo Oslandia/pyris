@@ -5,7 +5,7 @@
 
 import slumber
 
-from pyris.conf import GEOCODER_URL as URL
+from pyris.config import GEOCODER_URL as URL
 
 api = slumber.API(URL)
 
