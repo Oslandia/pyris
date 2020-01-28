@@ -58,6 +58,17 @@ iris_code_parser.add_argument("limit", required=False, default=10, dest='limit',
 address_parser = geojson_parser.copy()
 address_parser.add_argument("q", required=True, dest='q', location='args',
                             help='Query')
+address_parser.add_argument("postcode", required=False, dest='postcode', location='args',
+                            help='postcode (code Postal)')
+address_parser.add_argument("citycode", required=False, dest='citycode', location='args',
+                            help='citycode (code INSEE)')
+address_parser.add_argument("lat", required=False, type=float, dest='lat', location='args',
+                            help='latitude')
+address_parser.add_argument("lon", required=False, type=float, dest='lon', location='args',
+                            help='longitude')
+address_parser.add_argument("limit", required=False, type=int, dest='limit', location='args',
+                            help='limite (nombre d’élements retournés)')
+
 
 coords_parser = geojson_parser.copy()
 coords_parser.add_argument("lat", required=True, type=float, dest='lat', location='args',
@@ -149,12 +160,12 @@ class CompleteIrisCode(Resource):
 @api.route("/search/")
 class IrisFromAddress(Resource):
     @api.doc(parser=address_parser,
-             description="Look for an IRIS for a specific address.")
+             description="Look for an IRIS for a specific address. This will use the `search` endpoint of API Adresse of geo.api.gouv.fr service (see documentation here geo.api.gouv.fr/adresse) to retrieve coordinates and then will retrieve iris code from those coordinates")
     def get(self):
         args = address_parser.parse_args()
-        query = args['q']
-        Logger.info("Look for IRIS for address '%s'", address)
-        coord = address.coordinate(query)
+        q, postcode, citycode, lat, lon, limit = args['q'], args['postcode'], args['citycode'], args['lat'], args['lon'], args['limit']
+        Logger.info("Look for IRIS for q '%s', postcode '%s', citycode '%s', lat '%s' , lon '%s', limit '%s'", q, postcode, citycode, lat, lon, limit)
+        coord = address.coordinate(q, postcode, citycode, lat, lon, limit)
         Logger.info("Get coordinate (%s, %s)", coord["lon"], coord["lat"])
         Logger.info("For address '%s'", coord["address"])
         if coord['address'] is None:
