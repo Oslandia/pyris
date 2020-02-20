@@ -9,14 +9,16 @@ URL = "http://api-adresse.data.gouv.fr"
 api = slumber.API(URL)
 
 
-def coordinate(address):
+def coordinate(q, postcode, citycode, lat, lon, limit):
     """Get lon/lat coordinate from an address
 
-    address: str
-
+    q: str
+    postcode: str
+    citycode: str    
+    
     Return (longitude, latitde)
     """
-    resources = api.search.get(q=address)
+    resources = api.search.get(q=q, postcode=postcode, citycode=citycode, lat=lat, lon=lon, limit=limit)
     if len(resources['features']) == 0:
         return {"lon": None,
                 "lat": None,
