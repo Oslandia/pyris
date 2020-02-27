@@ -55,23 +55,11 @@ For instance, you can:
 Data
 ----
 
-IRIS shapes at
-https://www.data.gouv.fr/fr/datasets/contour-des-iris-insee-tout-en-un/
-
-Go to the ``data`` directory and then:
-
--  ``./01-download-data.sh``
-
 You have to install postgreSQL and PostGIS. For Debian:
 
 ::
 
     sudo apt-get install postgresql postgis
-
-Create a database name ``pyris`` with:
-
--  ``02-create-database.sh``
--  and ``03-insert-data.sh`` to insert data
 
 You have to be a PostgreSQL superuser to create the postgis extension
 for your database. If it's not the case, you can do:
@@ -80,16 +68,24 @@ for your database. If it's not the case, you can do:
 -  ``su - postgres``
 -  ``psql pyris -c "CREATE EXTENSION postgis;"``
 
-Test the insertion with a simple:
+All usefull scripts are in the `scripts-data` folder. Two steps:
 
-.. code:: sql
+* Download and some data processing for IGN and Insee data. Take a look to the
+  `Makefile` in `scripts-data`.
 
-    SELECT gid,depcom,nom_com,iris,typ_iris
-    FROM geoiris LIMIT 10;
+* Then load data into your database thanks to the Python script `loader.py`.
 
-There are two other scripts ``04-download-infra-insee.sh`` and
-``05-insee-to-db.sh`` which download, process and insert some Insee
-statistics data for each Iris.
+To summarize, in a dedicated virtualenv, do:
+
+1. Go to `scripts-data`
+2. Run `make all`
+3. Run `python loader.py ./data`
+
+For Python dependencies which help you to process data, take a look to the
+`scripts-data/requirements.txt` file.
+
+You also have a configuration file example at `scripts-data/settings.ini.sample`.
+
 
 Launch the Web App
 ------------------
