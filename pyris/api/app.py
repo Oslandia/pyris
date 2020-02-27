@@ -3,12 +3,10 @@
 import logging
 
 from flask import Blueprint, render_template
-from flask_restplus import Resource, Api, apidoc, inputs
-
+from flask_restplus import Api, Resource, apidoc, inputs
 from pyris import address
 from pyris.api import extract
 from pyris.api.insee import api as insee_api
-
 
 Logger = logging.getLogger(__name__)
 
@@ -109,22 +107,24 @@ class IrisListFromCityCode(Resource):
         return iris
 
 
-@api.route("/city/search/<string:query>")
+@api.route("/city/search/")
 class IrisListFromQuery(Resource):
-    @api.doc(parser=api.parser(),
+    @api.doc(parser=address_parser,
              description="Get the list of all the iris codes in the city matching the query")
-    def get(self, query):
-        Logger.info("Looking for the list of iris in the city matching the query %s", query)
-        Logger.info("Looking for longitude and latitude for the query %s", query)
-        coord=address.coordinate(query)
+    def get(self):
+        args = address_parser.parse_args()
+        q, postcode, citycode, lat, lon, limit = args['q'], args['postcode'], args['citycode'], args['lat'], args['lon'], args['limit']
+        Logger.info("Look for a list of IRIS in a city for q '%s', postcode '%s', citycode '%s', lat '%s' , lon '%s', limit '%s'",
+                    q, postcode, citycode, lat, lon, limit)
+        coord = address.coordinate(q, postcode, citycode, lat, lon, limit)
         if coord["address"] is None:
             # Requests sent to '/api/search' that match nothing do not return a 404 error like other requests.
             # Is this an intentional choice?
             api.abort(404, "No city found matching that query")
         # I'm pretty sure the preferred order is usually latitude first, then longitude
         Logger.info("Looking for iris at coordinates %s, %s", coord["lat"], ["lon"])
-        iris=extract.iris_from_coordinate(coord["lon"], coord["lat"])
-        iris_list=extract.get_iris_list_by_city_code(iris["citycode"])
+        iris = extract.iris_from_coordinate(coord["lon"], coord["lat"])
+        iris_list = extract.get_iris_list_by_city_code(iris["citycode"])
         return {"city_name": iris["city"], "city_code": iris["citycode"], "iris_list": iris_list}
 
 
