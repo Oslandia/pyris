@@ -2,12 +2,16 @@
 
 import setuptools
 
-
 with open("README.rst") as fobj:
     LONG_DESCRIPTION = fobj.read()
 
-INSTALL_REQUIRES = ["Flask==1.0.2", "flask-restplus==0.12.1",
-                    "psycopg2-binary", "pyaml", "slumber", "gunicorn==19.9"]
+INSTALL_REQUIRES = ["Flask==1.0.2",
+                    "flask-restplus==0.12.1",
+                    "Werkzeug==0.16.1",
+                    "psycopg2-binary",
+                    "pyaml",
+                    "slumber",
+                    "gunicorn==19.9", ]
 
 setuptools.setup(
     name='pyris',
