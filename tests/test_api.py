@@ -51,8 +51,8 @@ def test_api_address_search(client):
 
 
 def test_api_city_search(client):
-    query = "bordeaux"
-    resp = client.get("/api/city/search/" + query)
+    resp = client.get("/api/city/search/",
+                      query_string={"q": "bordeaux", "citycode": "33063"})
     assert resp.status_code == 200
     data = resp.json
     assert data["city_name"] == "Bordeaux"

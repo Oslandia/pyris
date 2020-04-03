@@ -3,3 +3,4 @@ csvkit
 ipython
 ipdb
 flake8
+pytest
