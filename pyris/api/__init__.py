@@ -14,7 +14,7 @@ from flask_restplus import Api as rpapi
 from pyris.api.app import service
 
 # app version
-__version__ = '0.1.dev0'
+__version__ = '1.0'
 
 ISO_FORMAT = "%Y-%m-%d"
 Logger = logging.getLogger(__name__)

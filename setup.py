@@ -17,7 +17,7 @@ setuptools.setup(
     name='pyris',
     version='0.7',
     license='BSD',
-    url='https://github.com/garaud/pyris',
+    url='https://github.com/Oslandia/pyris',
     packages=setuptools.find_packages(exclude=['data', 'app.yml']),
     include_package_data=True,
     install_requires=INSTALL_REQUIRES,
@@ -34,8 +34,8 @@ setuptools.setup(
         "Intended Audience :: Developers",
         "Operating System :: OS Independent",
         "Programming Language :: Python",
-        "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
     ]
 )
