@@ -8,21 +8,23 @@ DOWNLOADDIR=download
 # Folder to process some data
 DATADIR=data
 
-# IGN URLs : IRIS 2017 contours
-IGN_URL=https://wxs-telechargement.ign.fr/1yhlj2ehpqf3q6dt6a2y7b64/telechargement/inspire/CONTOURS-IRIS-2018-06-08$$CONTOURS-IRIS_2-1__SHP__FRA_2018-06-08/file/CONTOURS-IRIS_2-1__SHP__FRA_2018-06-08.7z
+# IGN URLs : IRIS 2018 contours
+# IGN_URL=https://wxs-telechargement.ign.fr/1yhlj2ehpqf3q6dt6a2y7b64/telechargement/inspire/CONTOURS-IRIS-2018-06-08$$CONTOURS-IRIS_2-1__SHP__FRA_2018-06-08/file/CONTOURS-IRIS_2-1__SHP__FRA_2018-06-08.7z
+IGN_URL=ftp://Contours_IRIS_ext:ao6Phu5ohJ4jaeji@ftp3.ign.fr/CONTOURS-IRIS_2-1__SHP__FRA_2018-01-01.7z.001
 IGN_ZIP_FILE=contour-iris.7z
-IGN_REFERENCE_SHAPEFILE=CONTOURS-IRIS_2-1__SHP__FRA_2018-06-08/CONTOURS-IRIS/1_DONNEES_LIVRAISON_2018-06-00105/CONTOURS-IRIS_2-1_SHP_LAMB93_FXX-2017/CONTOURS-IRIS.shp
-IGN_SHAPEFILE=$(addsuffix -metropole-2017.shp, $(basename $(notdir $(IGN_REFERENCE_SHAPEFILE))))
+IGN_REFERENCE_SHAPEFILE=CONTOURS-IRIS_2-1__SHP__FRA_2018-01-01/CONTOURS-IRIS/1_DONNEES_LIVRAISON_2018-07-00057/CONTOURS-IRIS_2-1_SHP_LAMB93_FXX-2018/CONTOURS-IRIS.shp
+IGN_SHAPEFILE=$(addsuffix -metropole-2018.shp, $(basename $(notdir $(IGN_REFERENCE_SHAPEFILE))))
 
-# Insee Data : IRIS 2017 and census 2015 (IRIS)
-INSEE_URL=https://www.insee.fr/fr/statistiques/fichier/2017499/reference_IRIS_geo2017.zip
-INSEE_ZIP_FILE=iris-insee-2017.zip
-INSEE_REFERENCE_FILE=reference_IRIS_geo2017.xls
-INSEE_INFRA_URLS := https://www.insee.fr/fr/statistiques/fichier/3627376/base-ic-evol-struct-pop-2015.zip \
-	https://www.insee.fr/fr/statistiques/fichier/3627367/base-ic-couples-familles-menages-2015.zip \
-	https://www.insee.fr/fr/statistiques/fichier/3627372/base-ic-diplomes-formation-2015.zip \
-	https://www.insee.fr/fr/statistiques/fichier/3627374/base-ic-logement-2015.zip \
-        https://www.insee.fr/fr/statistiques/fichier/3627009/base-ic-activite-residents-2015.zip \
+# Insee Data : IRIS 2018 and census 2016 (IRIS)
+INSEE_URL=https://www.insee.fr/fr/statistiques/fichier/2017499/reference_IRIS_geo2018.zip
+INSEE_ZIP_FILE=iris-insee-2018.zip
+INSEE_REFERENCE_FILE=reference_IRIS_geo2018.xls
+INSEE_INFRA_URLS := https://www.insee.fr/fr/statistiques/fichier/4228434/base-ic-evol-struct-pop-2016.zip \
+	https://www.insee.fr/fr/statistiques/fichier/4228428/base-ic-couples-familles-menages-2016.zip \
+	https://www.insee.fr/fr/statistiques/fichier/4228432/base-ic-logement-2016.zip \
+	https://www.insee.fr/fr/statistiques/fichier/4228430/base-ic-diplomes-formation-2016.zip \
+	https://www.insee.fr/fr/statistiques/fichier/4228426/base-ic-activite-residents-2016.zip \
+
 # French national addresses data
 BAN_URL = http://bano.openstreetmap.fr/data/full.sjson.gz
 BAN_ZIP_FILE = $(call url2file, $(BAN_URL))
