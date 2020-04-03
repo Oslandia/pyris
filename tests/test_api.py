@@ -30,6 +30,10 @@ def test_api_iris(client):
     data = resp.json
     assert data["type"] == "H"
     assert data["citycode"] == "69381"
+    resp = client.get("/api/iris/" + "0101")
+    assert resp.status_code == 200
+    data = resp.json
+    assert len(data) == 10
 
 
 def test_api_coords(client):
