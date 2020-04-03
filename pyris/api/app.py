@@ -2,6 +2,7 @@
 
 import logging
 
+import flask
 from flask import Blueprint, render_template
 from flask_restplus import Api, Resource, apidoc, inputs
 from pyris import address
