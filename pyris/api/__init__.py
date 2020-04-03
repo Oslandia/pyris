@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 
 import io
-import os
 import logging
-from datetime import datetime, date
+import os
+from datetime import date, datetime
 
-from flask import Flask
-from flask.json import JSONEncoder
 from yaml import load as yload
 
+import flask
+from flask import Flask
+from flask.json import JSONEncoder
+from flask_restplus import Api as rpapi
 from pyris.api.app import service
 
 # app version
@@ -60,6 +62,15 @@ def load_yaml_config(filename):
     return yload(content).get('flask', {})
 
 
+@property
+def specs_url(self):
+    """Fixes issue where swagger-ui makes a call to swagger.json over HTTP.
+       This can ONLY be used on servers that actually use HTTPS.  On servers that use HTTP,
+       this code should not be used at all.
+    """
+    return flask.url_for(self.endpoint('specs'), _external=True, _scheme='https')
+
+
 def create_app(env='Defaults'):
     """
     Creates application.
@@ -75,6 +86,8 @@ def create_app(env='Defaults'):
         set_level('debug')
     else:
         set_level(app.config['LOG_LEVEL'])
+    if app.config['FORCE_SWAGGER_JSON_HTTPS']:
+        rpapi.specs_url = specs_url
     Logger.info("Run the app")
     register_extensions(app)
     app.json_encoder = CustomJSONEncoder
