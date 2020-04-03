@@ -22,7 +22,7 @@ select insee_com
   ,typ_iris
   ,2017 as annee
   , st_transform(geom, 4326)
-from import.iris_metropole_2017;
+from import.iris_metropole_2018;
 
 create index geoiris_insee_com_idx on geoiris(insee_com);
 create index geoiris_geom_idx on geoiris using gist(geom);
