@@ -63,7 +63,7 @@ psql_cmd.extend([
 
 shp2pgsql_cmd = [
     'shp2pgsql',
-    '-W latin1',
+    '-W UTF8',
     '-D',
     '-g geom',
     '-I'  # index gist
